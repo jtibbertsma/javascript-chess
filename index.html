@@ -10,6 +10,20 @@
   <script src="app.js"></script>
 </head>
 <body>
-
+  <div id="board" ng-controller="BoardCtrl">
+    <div
+      ng-repeat="square in view"
+      ng-class="{
+        square: true,
+        white: square.whiteSquare,
+        black: !square.whiteSquare,
+        'white-piece': square.whitePiece,
+        'black-piece': !square.whitePiece,
+        selected: square.selected
+      }"
+    >
+      {{ square.content }}
+    </div>
+  </div>
 </body>
 </html>
