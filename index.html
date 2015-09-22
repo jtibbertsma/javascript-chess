@@ -14,12 +14,13 @@
     <div
       ng-repeat="square in view"
       ng-class="{
-        square: true,
-        white: square.whiteSquare,
-        black: !square.whiteSquare,
-        'white-piece': square.whitePiece,
-        'black-piece': !square.whitePiece,
-        selected: square.selected
+        square:        true,
+        white:         square.whiteSquare,
+        black:        !square.whiteSquare,
+       'white-piece':  square.whitePiece,
+       'black-piece': !square.whitePiece,
+        selected:      square.selected,
+        destination:   square.destination
       }"
     >
       {{ square.content }}
