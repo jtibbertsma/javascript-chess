@@ -4,6 +4,6 @@
   }
 
   var Game = Chess.Game = function () {
-
+    this.board = new Chess.Board();
   };
 })();
