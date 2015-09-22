@@ -1,7 +1,15 @@
 angular.module('JSChess', [])
 
-  .factory('chessView', [
-    function chessViewFactory() {
+  .factory('chessGame', [
+    function chessGameFactory() {
+      return {
+        game: new Chess.Game()
+      }
+    }
+  ])
+
+  .factory('chessView', ['chessGame',
+    function chessViewFactory(chessGame) {
       var view = [];
 
       function isWhite(idx) {
