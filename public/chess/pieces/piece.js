@@ -4,4 +4,8 @@
   }
 
   Chess.Pieces = {};
+
+  var Piece = Chess.Pieces.Piece = function () {
+
+  };
 })();
