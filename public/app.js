@@ -3,7 +3,7 @@ angular.module('JSChess', [])
   .factory('chessGame', [
     function chessGameFactory() {
       return {
-        game: new Chess.Game()
+        game: new Chess.GameData()
       }
     }
   ])

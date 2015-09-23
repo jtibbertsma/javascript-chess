@@ -3,7 +3,7 @@
     Chess = {};
   }
 
-  var Game = Chess.Game = function () {
+  var GameData = Chess.GameData = function () {
     this.board = new Chess.Board();
   };
 })();
