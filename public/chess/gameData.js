@@ -6,8 +6,10 @@
   var GameData = Chess.GameData = function (options) {
     this.board = options && options.board;
     this.moves = [];
-    this.capturedWhites = [];
-    this.capturedBlacks = [];
+    this.capturedPieces = {
+      black: [],
+      white: []
+    }
   };
 
   function validPos(pos) {
@@ -30,16 +32,12 @@
   }
 
   GameData.prototype = {
-    move: function (pos1, pos2) {
-      if (!validPos(pos1) || !validPos(pos2)) {
-        throw "Out of bounds position";
-      }
-
+    _move: function (pos1, pos2) {
       var fromSquare = this.board.pieceAt(pos1),
           toSquare   = this.board.pieceAt(pos2);
 
       if (toSquare !== null) {
-        
+        this.capturedPieces[toSquare.color].push(toSquare);
       }
 
       this.moves.push({
@@ -47,6 +45,20 @@
         to: pos2,
         capture: toSquare
       });
+
+      this.board.move(pos1, pos2);
+    },
+
+    move: function (pos1, pos2) {
+      if (!validPos(pos1) || !validPos(pos2)) {
+        throw "Out of bounds position";
+      }
+
+      // if (!posInArray(pos2, this.validMoves(pos1))) {
+      //   throw "Invalid move";
+      // }
+
+      this._move(pos1, pos2);
     }
   };
 })();

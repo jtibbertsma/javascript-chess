@@ -38,38 +38,37 @@ describe("GameData", function () {
           return mockBoard.pieces[stringify(pos)];
         },
 
-        placePiece: function (pos, piece) {
-          mockBoard.pieces[stringify(pos)] = piece;
-        },
-
         inCheck: function (color) {
           return color === "white" && mockBoard.pieceAt([1,3]) === null;
         },
 
         deleted: null,
 
-        pieces: {}
-      };
-
-      mockBoard.pieces[stringify([0,0])] = {
-        color: "white",
-        validMoves: function () {
-          return [[0,0], [1,1], [2,2], [3,3], [4,4]];
+        pieces: {
+          00: {
+            color: "white",
+            validMoves: function () {
+              return [[0,0], [1,1], [2,2], [3,3], [4,4]];
+            }
+          },
+          13: {
+            color: "white",
+            validMoves: function () {
+              return [[1,4]];
+            }
+          },
+          44: {
+            color: "black"
+          },
+          22: null,
+          14: null,
+          11: null
         }
       };
-      mockBoard.pieces[stringify([1,3])] = {
-        color: "white",
-        validMoves: function () {
-          return [[1,4]];
-        }
-      };
-      mockBoard.pieces[stringify([1,4])] = {
-        color: "black"
-      };
 
-      spyOn(mockBoard, 'move');
-      spyOn(mockBoard, 'pieceAt');
-      spyOn(mockBoard, 'inCheck');
+      spyOn(mockBoard, 'move').and.callThrough();
+      spyOn(mockBoard, 'pieceAt').and.callThrough();
+      spyOn(mockBoard, 'inCheck').and.callThrough();
 
       this.gameData = new Chess.GameData({
         board: mockBoard
@@ -141,10 +140,10 @@ describe("GameData", function () {
       });
 
       it("keeps track of captured pieces", function () {
-        expect(this.gameData.capturedBlacks.length).toEqual(0);
+        expect(this.gameData.capturedPieces.black.length).toEqual(0);
 
         this.gameData.move([0,0], [4,4]);
-        expect(this.gameData.capturedBlacks.length).toEqual(1);
+        expect(this.gameData.capturedPieces.black.length).toEqual(1);
       });
     });
   });
