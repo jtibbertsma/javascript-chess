@@ -3,7 +3,7 @@
     Chess = {};
   }
 
-  var GameData = Chess.GameData = function (options) {
+  var Game = Chess.Game = function (options) {
     this.board = options && options.board;
     this.moves = [];
     this.capturedPieces = {
@@ -31,7 +31,11 @@
     return false;
   }
 
-  GameData.prototype = {
+  Game.prototype = {
+    /* _move (private)
+     *
+     * Move a piece without validating.
+     */
     _move: function (pos1, pos2) {
       var fromSquare = this.board.pieceAt(pos1),
           toSquare   = this.board.pieceAt(pos2);
@@ -49,6 +53,11 @@
       this.board.move(pos1, pos2);
     },
 
+    /* move
+     *
+     * Move a piece to a new position. Before moving, ensure that the move is
+     * valid. Handle piece capturing.
+     */
     move: function (pos1, pos2) {
       if (!validPos(pos1) || !validPos(pos2)) {
         throw "Out of bounds position";
@@ -59,6 +68,20 @@
       // }
 
       this._move(pos1, pos2);
+    },
+
+    /* undoLastMove
+     *
+     * Undo the previous move. Replace a captured piece if necessary. Do nothing if
+     * it's the beginning of the game.
+     */
+    undoLastMove: function () {
+      // if (this.moves.length === 0) {
+      //   return;
+      // }
+
+      // var move = this.moves.pop();
+      // if (move.capture)
     }
   };
 })();

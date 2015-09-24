@@ -1,10 +1,10 @@
 angular.module('JSChess', [])
 
-  .factory('gameData', [
-    function gameDataFactory() {
+  .factory('game', [
+    function gameFactory() {
       var o = {
         reset: function () {
-          o.data = new Chess.GameData({
+          o.data = new Chess.Game({
             board: new Chess.Board({
               pieces: Chess.Util.defaultPieces()
             })
@@ -17,8 +17,8 @@ angular.module('JSChess', [])
     }
   ])
 
-  .factory('boardView', ['gameData',
-    function boardViewFactory(gameData) {
+  .factory('boardView', ['game',
+    function boardViewFactory(game) {
       var view = [];
 
       function isWhite(idx) {
