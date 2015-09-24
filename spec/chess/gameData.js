@@ -38,6 +38,10 @@ describe("GameData", function () {
           return mockBoard.pieces[stringify(pos)];
         },
 
+        placePiece: function (pos, piece) {
+          mockBoard.pieces[stringify(pos)] = piece;
+        },
+
         inCheck: function (color) {
           return color === "white" && mockBoard.pieceAt([1,3]) === null;
         },
@@ -70,6 +74,7 @@ describe("GameData", function () {
       spyOn(mockBoard, 'move').and.callThrough();
       spyOn(mockBoard, 'pieceAt').and.callThrough();
       spyOn(mockBoard, 'inCheck').and.callThrough();
+      spyOn(mockBoard, 'placePiece').and.callThrough();
 
       this.gameData = new Chess.GameData({
         board: mockBoard
@@ -145,6 +150,48 @@ describe("GameData", function () {
 
         this.gameData.move([0,0], [4,4]);
         expect(this.gameData.capturedPieces.black.length).toEqual(1);
+      });
+    });
+    
+    describe(".undoLastMove", function () {
+      beforeEach(function () {
+        var capturedPiece = { color: "white" }
+
+        this.gameData.moves.push({
+          from: [5,6],
+          to:   [4,4],
+          capture: capturedPiece
+        });
+
+        this.gameData.capturedPieces.white.push(capturedPiece);
+      });
+
+      it("deletes the move from the moves array", function () {
+        expect(this.gameData.moves.length).toEqual(1);
+        this.gameData.undoLastMove();
+        expect(this.gameData.moves.length).toEqual(0);
+      });
+
+      it("deletes a captured piece from the appropriate array", function () {
+        expect(this.gameData.capturedPieces.white.length).toEqual(1);
+        this.gameData.undoLastMove();
+        expect(this.gameData.capturedPieces.white.length).toEqual(0);
+      });
+
+      it("returns a captured piece to its original position", function () {
+        this.gameData.undoLastMove();
+        expect(this.gameData.pieceAt([5,6])).toEqual({ color: "white" });
+      });
+
+      it("moves the piece back to its original position", function () {
+        this.gameData.undoLastMove();
+        expect(this.gameData.pieceAt([4,4])).toEqual({ color: "black" });
+      });
+
+      it("doesn't use Board.move", function () {
+        this.gameData.undoLastMove();
+        expect(this.gameData.board.placePiece).toHaveBeenCalled();
+        expect(this.gameData.board.move).not.toHaveBeenCalled();
       });
     });
   });
