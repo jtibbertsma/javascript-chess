@@ -19,45 +19,51 @@ describe("GameData", function () {
   describe("Moving pieces", function () {
 
     beforeEach(function () {
+      function stringify(pos) {
+        return "" + pos[0] + pos[1];
+      }
+
       var mockBoard = {
         move: function (pos1, pos2) {
-          if (mockBoard.pieces[pos1] === null) {
-            mockBoard.pieces[pos1] = mockBoard.deleted;
+          if (mockBoard.pieces[stringify(pos1)] === null) {
+            mockBoard.pieces[stringify(pos1)] = mockBoard.deleted;
             mockBoard.deleted = null;
           } else {
-            mockBoard.deleted = mockBoard.pieces[pos1];
-            mockBoard.pieces[pos1] = null;
+            mockBoard.deleted = mockBoard.pieces[stringify(pos1)];
+            mockBoard.pieces[stringify(pos1)] = null;
           }
         },
 
         pieceAt: function (pos) {
-          return mockBoard.pieces[pos];
+          return mockBoard.pieces[stringify(pos)];
         },
 
         placePiece: function (pos, piece) {
-          mockBoard.pieces[pos] = piece;
+          mockBoard.pieces[stringify(pos)] = piece;
         },
 
         inCheck: function (color) {
           return color === "white" && mockBoard.pieceAt([1,3]) === null;
         },
 
-        deleted: null
+        deleted: null,
+
+        pieces: {}
       };
 
-      mockBoard.pieces[[0,0]] = {
+      mockBoard.pieces[stringify([0,0])] = {
         color: "white",
         validMoves: function () {
           return [[0,0], [1,1], [2,2], [3,3], [4,4]];
         }
       };
-      mockBoard.pieces[[1,3]] = {
+      mockBoard.pieces[stringify([1,3])] = {
         color: "white",
         validMoves: function () {
           return [[1,4]];
         }
       };
-      mockBoard.pieces[[1,4]] = {
+      mockBoard.pieces[stringify([1,4])] = {
         color: "black"
       };
 
