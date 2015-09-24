@@ -19,34 +19,46 @@ describe("GameData", function () {
   describe("Moving pieces", function () {
 
     beforeEach(function () {
-      function equalPos(pos1, pos2) {
-        return pos1[0] === pos2[0] && pos1[1] === pos2[1];
-      }
-
       var mockBoard = {
         move: function (pos1, pos2) {
-          if (equalPos(pos1, [-9,9])) {
-            throw new Error("");
+          if (mockBoard.pieces[pos1] === null) {
+            mockBoard.pieces[pos1] = mockBoard.deleted;
+            mockBoard.deleted = null;
+          } else {
+            mockBoard.deleted = mockBoard.pieces[pos1];
+            mockBoard.pieces[pos1] = null;
           }
-
-
         },
 
         pieceAt: function (pos) {
-          return this.pieces[pos];
-        };
+          return mockBoard.pieces[pos];
+        },
 
-        pieces: {
-          [0,0]: {
-            color: "white"
-          },
-          [1,3]: {
-            color: "white"
-          },
-          [4,4]: {
-            color: "black"
-          }
+        placePiece: function (pos, piece) {
+          mockBoard.pieces[pos] = piece;
+        },
+
+        inCheck: function (color) {
+          return color === "white" && mockBoard.pieceAt([1,3]) === null;
+        },
+
+        deleted: null
+      };
+
+      mockBoard.pieces[[0,0]] = {
+        color: "white",
+        validMoves: function () {
+          return [[0,0], [1,1], [2,2], [3,3], [4,4]];
         }
+      };
+      mockBoard.pieces[[1,3]] = {
+        color: "white",
+        validMoves: function () {
+          return [[1,4]];
+        }
+      };
+      mockBoard.pieces[[1,4]] = {
+        color: "black"
       };
 
       spyOn(mockBoard, 'move');
@@ -63,6 +75,7 @@ describe("GameData", function () {
         this.gameData.move([0,0], [2,2]);
 
         expect(this.gameData.board.move).toHaveBeenCalled();
+        expect(this.gameData.board.inCheck).toHaveBeenCalled();
       });
 
       describe("Throws an exception for an invalid move:", function () {
@@ -81,7 +94,7 @@ describe("GameData", function () {
           }.bind(this);
 
           var f2 = function outOfBoundsMove2() {
-            this.gameData.move([0,0], [-1, 0]);
+            this.gameData.move([0,0], [-1,0]);
           }.bind(this);
 
           var f3 = function outOfBoundsMove3() {

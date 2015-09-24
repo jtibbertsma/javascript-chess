@@ -1,15 +1,24 @@
 angular.module('JSChess', [])
 
-  .factory('chessGame', [
-    function chessGameFactory() {
-      return {
-        game: new Chess.GameData()
-      }
+  .factory('gameData', [
+    function gameDataFactory() {
+      var o = {
+        reset: function () {
+          o.data = new Chess.GameData({
+            board: new Chess.Board({
+              pieces: Chess.Util.defaultPieces()
+            })
+          });
+        }
+      };
+
+      o.reset();
+      return o;
     }
   ])
 
-  .factory('chessView', ['chessGame',
-    function chessViewFactory(chessGame) {
+  .factory('boardView', ['gameData',
+    function boardViewFactory(gameData) {
       var view = [];
 
       function isWhite(idx) {
@@ -34,8 +43,8 @@ angular.module('JSChess', [])
     }
   ])
 
-  .controller('BoardCtrl', ['$scope', 'chessView',
-    function BoardCtrl($scope, chessView) {
-      $scope.view = chessView;
+  .controller('BoardCtrl', ['$scope', 'boardView',
+    function BoardCtrl($scope, boardView) {
+      $scope.view = boardView;
     }
   ]);
