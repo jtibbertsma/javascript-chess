@@ -25,13 +25,8 @@ describe("Chess.Game", function () {
 
       var mockBoard = {
         move: function (pos1, pos2) {
-          if (mockBoard.pieces[stringify(pos1)] === null) {
-            mockBoard.pieces[stringify(pos1)] = mockBoard.deleted;
-            mockBoard.deleted = null;
-          } else {
-            mockBoard.deleted = mockBoard.pieces[stringify(pos1)];
-            mockBoard.pieces[stringify(pos1)] = null;
-          }
+          mockBoard.pieces[stringify(pos2)] = mockBoard.pieces[stringify(pos1)];
+          mockBoard.pieces[stringify(pos1)] = null;
         },
 
         pieceAt: function (pos) {
@@ -180,18 +175,13 @@ describe("Chess.Game", function () {
 
       it("returns a captured piece to its original position", function () {
         this.game.undoLastMove();
-        expect(this.game.pieceAt([5,6])).toEqual({ color: "white" });
+        expect(this.game.board.pieceAt([5,6])).toEqual({ color: "black" });
+        expect(this.game.board.placePiece).toHaveBeenCalled();
       });
 
       it("moves the piece back to its original position", function () {
         this.game.undoLastMove();
-        expect(this.game.pieceAt([4,4])).toEqual({ color: "black" });
-      });
-
-      it("doesn't use Board.move", function () {
-        this.game.undoLastMove();
-        expect(this.game.board.placePiece).toHaveBeenCalled();
-        expect(this.game.board.move).not.toHaveBeenCalled();
+        expect(this.game.board.pieceAt([4,4])).toEqual({ color: "white" });
       });
     });
   });

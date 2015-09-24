@@ -63,6 +63,8 @@
         throw "Out of bounds position";
       }
 
+      // This checks if the piece can't move to that spot, and also checks
+      // if the move would leave us in check.
       // if (!posInArray(pos2, this.validMoves(pos1))) {
       //   throw "Invalid move";
       // }
@@ -76,12 +78,17 @@
      * it's the beginning of the game.
      */
     undoLastMove: function () {
-      // if (this.moves.length === 0) {
-      //   return;
-      // }
+      if (this.moves.length === 0) {
+        return;
+      }
 
-      // var move = this.moves.pop();
-      // if (move.capture)
+      var move = this.moves.pop();
+      this.board.move(move.to, move.from);
+
+      if (move.capture !== null) {
+        this.board.placePiece(move.to, move.capture);
+        this.capturedPieces[move.capture.color].pop();
+      }
     }
   };
 })();
