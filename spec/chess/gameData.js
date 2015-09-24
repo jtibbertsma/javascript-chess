@@ -9,11 +9,11 @@ describe("GameData", function () {
   });
 
   it("should have an array of captured black pieces", function () {
-    expect(this.emptyData.capturedBlacks).toBeDefined();
+    expect(this.emptyData.capturedPieces.black).toBeDefined();
   });
 
   it("should have an array of captured white pieces", function () {
-    expect(this.emptyData.capturedWhites).toBeDefined();
+    expect(this.emptyData.capturedPieces.white).toBeDefined();
   });
 
   describe("Moving pieces", function () {
