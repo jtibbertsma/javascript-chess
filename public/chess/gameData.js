@@ -3,7 +3,10 @@
     Chess = {};
   }
 
-  var GameData = Chess.GameData = function () {
-    this.board = new Chess.Board();
+  var GameData = Chess.GameData = function (options) {
+    this.board = options && options.board;
+    this.moves = [];
+    this.capturedWhites = [];
+    this.capturedBlacks = [];
   };
 })();

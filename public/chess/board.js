@@ -3,8 +3,8 @@
     Chess = {};
   }
 
-  var Board = Chess.Board = function () {
-    this.pieces = [];
+  var Board = Chess.Board = function (options) {
+    this.pieces = options.pieces;
     this.grid = [];
 
     for (var i = 0; i < 8; ++i) {
@@ -13,6 +13,10 @@
         row.push(null);
       }
       this.grid.push(row);
+    }
+
+    for (var i = 0; i < this.pieces.length; ++i) {
+
     }
   };
 })();

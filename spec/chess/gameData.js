@@ -13,7 +13,7 @@ describe("GameData", function () {
   });
 
   it("should have an array of captured white pieces", function () {
-    expect(this.emptyData.capturedWhites.moves).toBeDefined();
+    expect(this.emptyData.capturedWhites).toBeDefined();
   });
 
   describe("Moving pieces", function () {
