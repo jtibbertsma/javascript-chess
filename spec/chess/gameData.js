@@ -114,7 +114,7 @@ describe("GameData", function () {
         });
 
         it("when the move isn't one of the piece's valid moves", function () {
-          var f = function emptyMove() {
+          var f = function illegalMove() {
             this.gameData.move([0,0], [5,5]);
           }.bind(this);
 
@@ -122,7 +122,7 @@ describe("GameData", function () {
         });
 
         it("when it leaves the mover in check", function () {
-          var f = function emptyMove() {
+          var f = function checkMove() {
             this.gameData.move([1,3], [1,4]);
           }.bind(this);
 
