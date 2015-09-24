@@ -62,7 +62,8 @@ describe("GameData", function () {
           },
           22: null,
           14: null,
-          11: null
+          11: null,
+          55: null
         }
       };
 
