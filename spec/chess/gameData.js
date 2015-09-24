@@ -68,6 +68,7 @@ describe("GameData", function () {
       };
 
       spyOn(mockBoard, 'move');
+      spyOn(mockBoard, 'pieceAt');
       spyOn(mockBoard, 'inCheck');
 
       this.gameData = new Chess.GameData({
@@ -81,7 +82,8 @@ describe("GameData", function () {
         this.gameData.move([0,0], [2,2]);
 
         expect(this.gameData.board.move).toHaveBeenCalled();
-        expect(this.gameData.board.inCheck).toHaveBeenCalled();
+        expect(this.gameData.board.pieceAt).toHaveBeenCalledWith([0,0]);
+        expect(this.gameData.board.pieceAt).toHaveBeenCalledWith([2,2]);
       });
 
       describe("Throws an exception for an invalid move:", function () {
@@ -125,7 +127,8 @@ describe("GameData", function () {
             this.gameData.move([1,3], [1,4]);
           }.bind(this);
 
-          expect(this.gameData.board.inCheck).toHaveBeenCalled();
+          expect(this.gameData.board.inCheck).toHaveBeenCalledWith("white");
+          expect(this.gameData.board.inCheck).not.toHaveBeenCalledWith("black");
           expect(f).toThrow();
         });
       });
