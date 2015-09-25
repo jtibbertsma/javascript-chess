@@ -24,7 +24,6 @@ describe("Chess.Game", function () {
 
       spyOn(mockBoard, 'move').and.callThrough();
       spyOn(mockBoard, 'pieceAt').and.callThrough();
-      spyOn(mockBoard, 'inCheck').and.callThrough();
       spyOn(mockBoard, 'placePiece').and.callThrough();
 
       this.game = new Chess.Game({
@@ -62,7 +61,7 @@ describe("Chess.Game", function () {
           }.bind(this);
 
           var f3 = function outOfBoundsMove3() {
-            this.game.move([0,0], [9,0]);
+            this.game.move([0,0], [8,0]);
           }.bind(this);
 
           expect(f1).toThrow();
@@ -70,6 +69,7 @@ describe("Chess.Game", function () {
           expect(f3).toThrow();
         });
 
+        // The following two tests rely on Game.validMoves
         it("when the move isn't one of the piece's valid moves", function () {
           var f = function illegalMove() {
             this.game.move([0,0], [5,5]);
@@ -83,8 +83,6 @@ describe("Chess.Game", function () {
             this.game.move([1,3], [1,4]);
           }.bind(this);
 
-          expect(this.game.board.inCheck).toHaveBeenCalledWith("white");
-          expect(this.game.board.inCheck).not.toHaveBeenCalledWith("black");
           expect(f).toThrow();
         });
       });
@@ -139,6 +137,31 @@ describe("Chess.Game", function () {
         this.game.undoLastMove();
         expect(this.game.board.pieceAt([5,6])).toEqual({ color: "black" });
       });
+    });
+  });
+
+  describe(".validMoves", function () {
+
+    beforeEach(function () {
+      var mockBoard = Mocks.board;
+      mockBoard.__reset__();
+
+      spyOn(mockBoard, 'inCheck').and.callThrough();
+      spyOn(mockBoard.pieces['00'], 'validMoves').and.callThrough();
+
+      this.game = new Chess.Game({ board: mockBoard });
+    });
+
+    it("looks at the valid moves of the piece in the given position", function () {
+
+    });
+
+    it("returns an empty array for an empty square", function () {
+
+    });
+
+    it("checks if a move would leave the player in check", function () {
+
     });
   });
 });

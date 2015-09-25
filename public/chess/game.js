@@ -113,7 +113,16 @@
      */
     movablePositions: function () {
       return [];
-    }
+    },
 
+    /* validMoves
+     *
+     * Get an array of all legal moves for a given position. If the player is in
+     * check, a move is only legal if it gets the player out of check. A player
+     * cannot move into check. En passant and castling are taken into account.
+     */
+    validMoves: function (pos) {
+      return [];
+    }
   };
 })();
