@@ -19,10 +19,14 @@
       board.pieces[stringify(pos)] = piece;
     },
 
+    /* This board is considered to be in check for white if the piece at
+     * [1,3] has been moved
+     */
     inCheck: function (color) {
       return color === "white" && board.pieceAt([1,3]) === null;
     },
 
+    /* call this in beforeEach */
     __reset__: function () {
       board.pieces = {
         '00': {
@@ -45,9 +49,6 @@
         11: null,
         55: null
       }
-    },
-
-    deleted: null,
-
+    }
   };
 })();
