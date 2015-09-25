@@ -104,6 +104,15 @@
       }
 
       return null;
+    },
+
+    /* movablePositions
+     *
+     * Given a color, return an array of the coordinates of each of that color's
+     * pieces that are able to move.
+     */
+    movablePositions: function () {
+      return [];
     }
 
   };
