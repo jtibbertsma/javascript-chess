@@ -19,52 +19,8 @@ describe("Chess.Game", function () {
   describe("Moving pieces", function () {
 
     beforeEach(function () {
-      function stringify(pos) {
-        return "" + pos[0] + pos[1];
-      }
-
-      var mockBoard = {
-        move: function (pos1, pos2) {
-          mockBoard.pieces[stringify(pos2)] = mockBoard.pieces[stringify(pos1)];
-          mockBoard.pieces[stringify(pos1)] = null;
-        },
-
-        pieceAt: function (pos) {
-          return mockBoard.pieces[stringify(pos)];
-        },
-
-        placePiece: function (pos, piece) {
-          mockBoard.pieces[stringify(pos)] = piece;
-        },
-
-        inCheck: function (color) {
-          return color === "white" && mockBoard.pieceAt([1,3]) === null;
-        },
-
-        deleted: null,
-
-        pieces: {
-          00: {
-            color: "white",
-            validMoves: function () {
-              return [[0,0], [1,1], [2,2], [3,3], [4,4]];
-            }
-          },
-          13: {
-            color: "white",
-            validMoves: function () {
-              return [[1,4]];
-            }
-          },
-          44: {
-            color: "black"
-          },
-          22: null,
-          14: null,
-          11: null,
-          55: null
-        }
-      };
+      var mockBoard = Mocks.board;
+      mockBoard.__reset__();
 
       spyOn(mockBoard, 'move').and.callThrough();
       spyOn(mockBoard, 'pieceAt').and.callThrough();
@@ -175,13 +131,13 @@ describe("Chess.Game", function () {
 
       it("returns a captured piece to its original position", function () {
         this.game.undoLastMove();
-        expect(this.game.board.pieceAt([5,6])).toEqual({ color: "black" });
+        expect(this.game.board.pieceAt([4,4])).toEqual({ color: "white" });
         expect(this.game.board.placePiece).toHaveBeenCalled();
       });
 
       it("moves the piece back to its original position", function () {
         this.game.undoLastMove();
-        expect(this.game.board.pieceAt([4,4])).toEqual({ color: "white" });
+        expect(this.game.board.pieceAt([5,6])).toEqual({ color: "black" });
       });
     });
   });
