@@ -32,7 +32,7 @@
         '00': {
           color: "white",
           validMoves: function () {
-            return [[0,0], [1,1], [2,2], [3,3], [4,4]];
+            return [[1,1], [2,2], [3,3], [4,4]];
           }
         },
         13: {
@@ -44,9 +44,10 @@
         44: {
           color: "black"
         },
-        22: null,
-        14: null,
         11: null,
+        22: null,
+        33: null,
+        14: null,
         55: null
       }
     }
