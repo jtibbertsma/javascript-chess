@@ -57,9 +57,17 @@ describe("Chess.Board", function () {
 
   describe(".pieceAt", function () {
 
-    it("sucessfully fetches pieces from the board", function () {
+    it("successfully fetches pieces from the board", function () {
       expect(this.board.pieceAt([0,0]).id).toEqual("elephant");
       expect(this.board.pieceAt([3,2]).id).toEqual("orangutan");
+    });
+
+    it("returns null for an empty square", function () {
+      expect(this.board.pieceAt([7,0])).toBeNull();
+    });
+
+    it("returns undefined for an invalid position", function () {
+      expect(this.board.pieceAt([0,-1])).toBeUndefined();
     });
   });
 
