@@ -153,15 +153,31 @@ describe("Chess.Game", function () {
     });
 
     it("looks at the valid moves of the piece in the given position", function () {
+      var validMoves = this.game.validMoves([0,0]);
+      var piece = this.game.board.pieceAt([0,0]);
 
+      expect(validMoves).toEqual([1,1], [2,2], [3,3], [4,4]);
+      expect(piece.validMoves).toHaveBeenCalledWith([0,0]);
     });
 
-    it("returns an empty array for an empty square", function () {
-
+    it("returns an empty array for an empty or invalid square", function () {
+      expect(this.game.validMoves([5,5])).toEqual([]);
+      expect(this.game.validMoves([-1,-1])).toEqual([]);
     });
 
     it("checks if a move would leave the player in check", function () {
+      var validMoves = this.game.validMoves([1,3]);
 
+      expect(validMoves).toEqual([]);
+      expect(this.game.board.inCheck).toHaveBeenCalledWith("white");
+      expect(this.game.board.inCheck).not.toHaveBeenCalledWith("black");
+    });
+
+    it("only returns moves that get a player out of check", function () {
+      this.game.board.move([1,3], [1,4]);
+      var validMoves = this.game.validMoves([0,0]);
+
+      expect(validMoves).toEqual([]);
     });
   });
 });
