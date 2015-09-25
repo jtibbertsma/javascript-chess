@@ -89,6 +89,22 @@
         this.board.placePiece(move.to, move.capture);
         this.capturedPieces[move.capture.color].pop();
       }
+    },
+
+    /* checkmate
+     *
+     * If there is no checkmate, return null. If there is a checkmate, return the
+     * color of the checkmated player as a string.
+     */
+    checkmate: function () {
+      if (this.movablePositions("white").length === 0) {
+        return "white";
+      } else if (this.movablePositions("black").length === 0) {
+        return "black";
+      }
+
+      return null;
     }
+
   };
 })();
