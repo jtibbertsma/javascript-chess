@@ -7,4 +7,4 @@ var app = connect();
 app.use(logger());
 app.use(serveStatic("public"));
 
-app.listen(5000);
+app.listen(process.env.PORT || 5000);
