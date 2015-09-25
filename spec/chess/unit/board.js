@@ -26,7 +26,7 @@ describe("Chess.Board", function () {
   describe("Getting pieces of a given color", function () {
     function searchForId(pieces, id) {
       for (var i = 0; i < pieces.length; ++i) {
-        if (pieces[i].id && pieces[i] === id) {
+        if (pieces[i].id && pieces[i].id === id) {
           return true;
         }
       }
@@ -49,6 +49,10 @@ describe("Chess.Board", function () {
       expect(searchForId(pieces, "elephant")).toBeTruthy();
       expect(searchForId(pieces, "orangutan")).toBeFalsy();
     });
+
+    it(".piecesOfColor should be defined", function () {
+      expect(this.board.piecesOfColor).toBeDefined();
+    });
   });
 
   describe(".pieceAt", function () {
@@ -62,30 +66,30 @@ describe("Chess.Board", function () {
   describe(".placePiece", function () {
 
     it("puts a piece in a new position", function () {
-      var piece = { pos: [8,8], color: "black", id: "octopus" };
-      this.board.placePiece([9,9], piece);
+      var piece = { pos: [0,6], color: "black", id: "octopus" };
+      this.board.placePiece([7,7], piece);
 
-      expect(this.board.pieceAt([9,9]).id).toEqual("octopus");
+      expect(this.board.pieceAt([7,7]).id).toEqual("octopus");
       expect(this.board.blackPieces().length).toEqual(3);
     });
 
     it("sets the pos property of the moved piece", function () {
-      var piece = { pos: [8,8], color: "black" };
-      this.board.placePiece([9,9], piece);
+      var piece = { pos: [0,6], color: "black" };
+      this.board.placePiece([7,7], piece);
 
-      expect(piece.pos).toEqual([9,9]);
+      expect(piece.pos).toEqual([7,7]);
     });
 
     it("removes a placed piece if it's already on the board", function () {
-      var piece = this.board.pieceAt([2,2]);
-      this.board.placePiece([9,9], piece);
+      var piece = this.board.pieceAt([0,2]);
+      this.board.placePiece([7,7], piece);
 
-      expect(this.board.pieceAt([2,2])).toBeNull();
+      expect(this.board.pieceAt([0,2])).toBeNull();
     });
 
     it("causes a captured piece to be removed from the board", function () {
       var piece = this.board.pieceAt([0,0]);
-      this.board.placePiece([2,0]);
+      this.board.placePiece([2,0], piece);
 
       expect(this.board.blackPieces().length).toEqual(1);
     });
@@ -93,7 +97,7 @@ describe("Chess.Board", function () {
 
   describe(".move", function () {
     beforeEach(function () {
-      spyOn(this.board, placePiece);
+      spyOn(this.board, 'placePiece');
     });
 
     it("delegates to Board.placePiece", function () {
@@ -102,7 +106,7 @@ describe("Chess.Board", function () {
     });
 
     it("shouldn't call placePiece if the initial position is null", function () {
-      this.board.move([9,9], [8,8]);
+      this.board.move([7,7], [0,6]);
       expect(this.board.placePiece).not.toHaveBeenCalled();
     });
   });

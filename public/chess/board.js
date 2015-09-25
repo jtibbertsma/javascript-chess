@@ -16,7 +16,8 @@
     }
 
     for (var i = 0; i < this.pieces.length; ++i) {
-
+      var pos = this.pieces[i].pos;
+      this.grid[pos[0]][pos[1]] = this.pieces[i];
     }
   };
 
@@ -26,8 +27,10 @@
      * Move one piece on the board to another square. Don't do any validations.
      * A piece in the destination square is ignored and overwritten.
      */
-    move: function () {
-
+    move: function (from, to) {
+      if (this.pieceAt(from)) {
+        this.placePiece(to, this.pieceAt(from));
+      }
     },
 
     /* pieceAt
@@ -35,7 +38,7 @@
      * Get the piece in a given position, or null if there isn't anything there.
      */
     pieceAt: function (pos) {
-      return null;
+      return this.grid[pos[0]][pos[1]];
     },
 
     /* placePiece
@@ -45,7 +48,12 @@
      * if it is, then set its old position to null.
      */
     placePiece: function (pos, piece) {
+      if (this.pieceAt(piece.pos) === piece) {
+        this.grid[piece.pos[0]][piece.pos[1]] = null;
+      }
 
+      this.grid[pos[0]][pos[1]] = piece;
+      piece.pos = pos;
     },
 
     /* whitePieces
@@ -53,7 +61,7 @@
      * Get all white pieces.
      */
     whitePieces: function () {
-      return [];
+      return this.piecesOfColor("white");
     },
 
     /* blackPieces
@@ -61,7 +69,25 @@
      * ditto black
      */
     blackPieces: function () {
-      return [];
+      return this.piecesOfColor("black");
+    },
+
+    /* piecesOfColor
+     *
+     * Do the actual work of whitePieces and blackPieces.
+     */
+    piecesOfColor: function (color) {
+      var pieces = [];
+
+      for (var i = 0; i < 8; ++i) {
+        for (var j = 0; j < 8; j++) {
+          if (this.grid[i][j] && this.grid[i][j].color === color) {
+            pieces.push(this.grid[i][j]);
+          }
+        }
+      }
+
+      return pieces;
     },
 
     /* inCheck
