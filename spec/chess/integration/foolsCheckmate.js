@@ -1,4 +1,5 @@
 describe("Fool's Checkmate", function () {
+
   it("game registers white checkmate for the fool's checkmate position", function () {
     var game = new Chess.Game({
       board: new Chess.Board({
