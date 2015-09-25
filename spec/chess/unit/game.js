@@ -1,19 +1,19 @@
 describe("Chess.Game", function () {
 
   beforeEach(function () {
-    this.emptyData = new Chess.Game();
+    this.emptyGame = new Chess.Game();
   });
 
   it("should have a moves array", function () {
-    expect(this.emptyData.moves).toBeDefined();
+    expect(this.emptyGame.moves).toBeDefined();
   });
 
   it("should have an array of captured black pieces", function () {
-    expect(this.emptyData.capturedPieces.black).toBeDefined();
+    expect(this.emptyGame.capturedPieces.black).toBeDefined();
   });
 
   it("should have an array of captured white pieces", function () {
-    expect(this.emptyData.capturedPieces.white).toBeDefined();
+    expect(this.emptyGame.capturedPieces.white).toBeDefined();
   });
 
   describe("Moving pieces", function () {
@@ -156,8 +156,8 @@ describe("Chess.Game", function () {
       var validMoves = this.game.validMoves([0,0]);
       var piece = this.game.board.pieceAt([0,0]);
 
-      expect(validMoves).toEqual([1,1], [2,2], [3,3], [4,4]);
-      expect(piece.validMoves).toHaveBeenCalledWith([0,0]);
+      expect(validMoves).toEqual([[1,1], [2,2], [3,3], [4,4]]);
+      expect(piece.validMoves).toHaveBeenCalled();
     });
 
     it("returns an empty array for an empty or invalid square", function () {
@@ -178,6 +178,23 @@ describe("Chess.Game", function () {
       var validMoves = this.game.validMoves([0,0]);
 
       expect(validMoves).toEqual([]);
+    });
+  });
+
+  describe(".inCheck", function () {
+
+    it("delegates to Board.inCheck", function () {
+      this.emptyGame.board = { inCheck: function () {} };
+
+      spyOn(this.emptyGame.board, 'inCheck');
+      this.emptyGame.inCheck("white");
+
+      expect(this.emptyGame.board.inCheck).toHaveBeenCalledWith("white");
+      expect(this.emptyGame.board.inCheck).not.toHaveBeenCalledWith("black");
+
+      this.emptyGame.inCheck("black");
+
+      expect(this.emptyGame.board.inCheck).toHaveBeenCalledWith("black");
     });
   });
 });

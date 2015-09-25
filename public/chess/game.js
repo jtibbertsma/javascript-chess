@@ -65,9 +65,9 @@
 
       // This checks if the piece can't move to that spot, and also checks
       // if the move would leave us in check.
-      // if (!posInArray(pos2, this.validMoves(pos1))) {
-      //   throw "Invalid move";
-      // }
+      if (!posInArray(pos2, this.validMoves(pos1))) {
+        throw "Invalid move";
+      }
 
       this._move(pos1, pos2);
     },
@@ -91,12 +91,23 @@
       }
     },
 
+    /* inCheck
+     *
+     * Check if a player is currently in check. This is just a wrapper for
+     * Board.inCheck
+     */
+    inCheck: function (color) {
+      return this.board.inCheck(color);
+    },
+
     /* checkmate
      *
      * If there is no checkmate, return null. If there is a checkmate, return the
      * color of the checkmated player as a string.
      */
     checkmate: function () {
+      // This implementation won't work, because it'll return a truthy value
+      // if there's a stalemate.
       if (this.movablePositions("white").length === 0) {
         return "white";
       } else if (this.movablePositions("black").length === 0) {
@@ -121,8 +132,23 @@
      * check, a move is only legal if it gets the player out of check. A player
      * cannot move into check. En passant and castling are taken into account.
      */
-    validMoves: function (pos) {
-      return [];
+    validMoves: function (piecePos) {
+      var piece = this.board.pieceAt(piecePos);
+      if (!piece) {
+        return [];
+      }
+
+      var validMoves = piece.validMoves().filter(function (pos) {
+        this._move(piecePos, pos);
+        var inCheck = this.inCheck(piece.color);
+        this.undoLastMove();
+
+        return !inCheck;
+      }.bind(this));
+
+      // handle en passant and castling here
+
+      return validMoves;
     }
   };
 })();
