@@ -17,20 +17,6 @@
            pos[0] <= 7 && pos[1] <= 7;
   }
 
-  function equalPos(pos1, pos2) {
-    return pos1[0] === pos2[0] && pos1[1] === pos2[1];
-  }
-
-  function posInArray(pos, array) {
-    for (var i = 0; i < array.length; ++i) {
-      if (equalPos(pos, array[i])) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   Game.prototype = {
     /* _move (private)
      *
@@ -65,7 +51,7 @@
 
       // This checks if the piece can't move to that spot, and also checks
       // if the move would leave us in check.
-      if (!posInArray(pos2, this.validMoves(pos1))) {
+      if (!Chess.Util.posInArray(pos2, this.validMoves(pos1))) {
         throw "Invalid move";
       }
 
