@@ -135,7 +135,7 @@ describe("Chess.Game", function () {
 
       it("moves the piece back to its original position", function () {
         this.game.undoLastMove();
-        expect(this.game.board.pieceAt([5,6])).toEqual({ color: "black" });
+        expect(this.game.board.pieceAt([5,6])).toEqual({ pos: [4,4], color: "black" });
       });
     });
   });
@@ -195,6 +195,26 @@ describe("Chess.Game", function () {
       this.emptyGame.inCheck("black");
 
       expect(this.emptyGame.board.inCheck).toHaveBeenCalledWith("black");
+    });
+  });
+
+  describe(".movablePositions", function () {
+
+    beforeEach(function () {
+      var mockBoard = Mocks.board;
+      mockBoard.__reset__();
+
+      this.game = new Chess.Game({ board: mockBoard });
+    });
+
+    it("returns positions that have a piece with valid moves", function () {
+      expect(this.game.movablePositions("white")).toEqual([[0,0]]);
+    });
+
+    it("returns an empty array if there are no possible moves", function () {
+      this.game.board.move([1,3], [1,1]);
+
+      expect(this.game.movablePositions("white")).toEqual([]);
     });
   });
 });

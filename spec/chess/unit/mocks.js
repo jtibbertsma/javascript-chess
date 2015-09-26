@@ -26,22 +26,29 @@
       return color === "white" && board.pieceAt([1,3]) === null;
     },
 
+    piecesOfColor: function (color) {
+      return [board.pieces['00'], board.pieces['13'] || board.pieces['11']];
+    },
+
     /* call this in beforeEach */
     __reset__: function () {
       board.pieces = {
         '00': {
+          pos: [0,0],
           color: "white",
           validMoves: function () {
             return [[1,1], [2,2], [3,3], [4,4]];
           }
         },
         13: {
+          pos: [1,3],
           color: "white",
           validMoves: function () {
             return [[1,4]];
           }
         },
         44: {
+          pos: [4,4],
           color: "black"
         },
         11: null,

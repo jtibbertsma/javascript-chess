@@ -122,8 +122,15 @@
      * Given a color, return an array of the coordinates of each of that color's
      * pieces that are able to move.
      */
-    movablePositions: function () {
-      return [];
+    movablePositions: function (color) {
+      return this.board.piecesOfColor(color)
+        .map(function (piece) {
+          return piece.pos;
+        }.bind(this))
+
+        .filter(function (pos) {
+          return this.validMoves(pos).length > 0;
+        }.bind(this));
     },
 
     /* validMoves
