@@ -110,8 +110,12 @@
           opponentPieces = this.piecesOfColor(otherColor(color));
 
       for (var i = 0; i < opponentPieces.length; ++i) {
-        
+        if (Chess.Util.posInArray(king.pos, opponentPieces[i].validMoves())) {
+          return true;
+        }
       }
+
+      return false;
     }
   };
 })();
