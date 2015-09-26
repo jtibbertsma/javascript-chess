@@ -19,7 +19,7 @@ describe("Chess.Game", function () {
   describe("Moving pieces", function () {
 
     beforeEach(function () {
-      var mockBoard = Mocks.board;
+      var mockBoard = Mocks.generalBoard;
       mockBoard.__reset__();
 
       spyOn(mockBoard, 'move').and.callThrough();
@@ -69,7 +69,6 @@ describe("Chess.Game", function () {
           expect(f3).toThrow();
         });
 
-        // The following two tests rely on Game.validMoves
         it("when the move isn't one of the piece's valid moves", function () {
           var f = function illegalMove() {
             this.game.move([0,0], [5,5]);
@@ -87,6 +86,15 @@ describe("Chess.Game", function () {
         });
       });
 
+      it("shouldn't call validMoves", function () {
+        // If we did call validMoves, we would be validating every square that
+        // a piece could move to, which we don't want.
+        spyOn(this.game, 'validMoves');
+
+        this.game.move([0,0], [2,2]);
+        expect(this.game.validMoves).not.toHaveBeenCalled();
+      });
+
       it("adds an item to the moves array", function () {
         var len = this.game.moves.length;
 
@@ -101,6 +109,7 @@ describe("Chess.Game", function () {
         expect(this.game.capturedPieces.black.length).toEqual(1);
       });
     });
+
     
     describe(".undoLastMove", function () {
       beforeEach(function () {
@@ -140,10 +149,33 @@ describe("Chess.Game", function () {
     });
   });
 
+  describe(".causesCheck", function () {
+    beforeEach(function () {
+      var MockBoard = Mocks.CausesCheckBoard;
+
+      this.piece = Mocks.causesCheckPiece;
+      this.game = new Chess.Game({
+        board: new MockBoard(this.piece)
+      });
+    });
+
+    it("returns true if a move will cause check", function () {
+      expect(this.game.causesCheck(this.piece, [1,1])).toBeTruthy();
+    });
+
+    it("doesn't move the piece in question", function () {
+      spyOn(this.game, 'undoLastMove');
+
+      this.game.causesCheck(this.piece, [1,1]);
+      expect(this.game.undoLastMove).toHaveBeenCalled();
+      expect(this.game.board.inCheck()).toBeFalsy();
+    });
+  });
+
   describe(".validMoves", function () {
 
     beforeEach(function () {
-      var mockBoard = Mocks.board;
+      var mockBoard = Mocks.generalBoard;
       mockBoard.__reset__();
 
       spyOn(mockBoard, 'inCheck').and.callThrough();
@@ -201,7 +233,7 @@ describe("Chess.Game", function () {
   describe(".movablePositions", function () {
 
     beforeEach(function () {
-      var mockBoard = Mocks.board;
+      var mockBoard = Mocks.generalBoard;
       mockBoard.__reset__();
 
       this.game = new Chess.Game({ board: mockBoard });

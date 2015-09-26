@@ -51,7 +51,7 @@
 
       // This checks if the piece can't move to that spot, and also checks
       // if the move would leave us in check.
-      if (!Chess.Util.posInArray(pos2, this.validMoves(pos1))) {
+      if (!this.validMove(pos1, pos2)) {
         throw "Invalid move";
       }
 
@@ -119,6 +119,19 @@
         }.bind(this));
     },
 
+    /* causesCheck
+     *
+     * Return true if a move will cause check. This method should leave the board
+     * in the same state as it finds it.
+     */
+    causesCheck: function (piece, pos) {
+      this._move(piece.pos, pos);
+      var inCheck = this.inCheck(piece.color);
+      this.undoLastMove();
+
+      return !inCheck;
+    },
+
     /* validMoves
      *
      * Get an array of all legal moves for a given position. If the player is in
@@ -131,13 +144,8 @@
         return [];
       }
 
-      var validMoves = piece.validMoves().filter(function (pos) {
-        this._move(piecePos, pos);
-        var inCheck = this.inCheck(piece.color);
-        this.undoLastMove();
-
-        return !inCheck;
-      }.bind(this));
+      var validMoves = piece.validMoves()
+        .filter(this.validMove.bind(this, piece));
 
       // handle en passant and castling here
 

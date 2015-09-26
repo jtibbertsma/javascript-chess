@@ -5,7 +5,7 @@
 
   Mocks = {};
 
-  var board = Mocks.board = {
+  var board = Mocks.generalBoard = {
     move: function (pos1, pos2) {
       board.pieces[stringify(pos2)] = board.pieces[stringify(pos1)];
       board.pieces[stringify(pos1)] = null;
@@ -59,4 +59,26 @@
       }
     }
   };
+
+  var Board = Mocks.CausesCheckBoard = function (piece) {
+    this.piece = piece;
+    this.moved = false;
+  };
+
+  Board.prototype = {
+    move: function (to, from) {
+      this.moved = !!this.moved;
+    },
+
+    pieceAt: function (pos) {
+      return pos[0] === 0 ? (this.moved ? null : this.piece)
+                          : (this.moved ? this.piece : null);
+    },
+
+    inCheck: function (color) {
+      return this.moved;
+    }
+  };
+
+  Mocks.causesCheckPiece = { pos: [0,0], color: "white" };
 })();
