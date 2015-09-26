@@ -7,6 +7,8 @@
     this.pieces = options.pieces;
     this.grid = [];
 
+    this.kings = { black: null, white: null };
+
     for (var i = 0; i < 8; ++i) {
       var row = [];
       for (var j = 0; j < 8; ++j) {
@@ -16,10 +18,18 @@
     }
 
     for (var i = 0; i < this.pieces.length; ++i) {
-      var pos = this.pieces[i].pos;
-      this.grid[pos[0]][pos[1]] = this.pieces[i];
+      var piece = this.pieces[i]
+      this.grid[piece.pos[0]][piece.pos[1]] = piece;
+
+      if (piece.isKing()) {
+        this.kings[piece.color] = piece;
+      }
     }
   };
+
+  function otherColor(color) {
+    return color === "white" ? "black" : "white";
+  }
 
   Board.prototype = {
     /* move
@@ -96,7 +106,12 @@
      * of their opponents pieces can move to the square occupied by the player's king.
      */
     inCheck: function (color) {
-      return false;
+      var king = this.kings[color],
+          opponentPieces = this.piecesOfColor(otherColor(color));
+
+      for (var i = 0; i < opponentPieces.length; ++i) {
+        
+      }
     }
   };
 })();

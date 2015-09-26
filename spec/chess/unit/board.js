@@ -5,20 +5,25 @@ describe("Chess.Board", function () {
       pieces: [{
         pos: [0,0],
         color: "white",
-        id: "elephant"
+        id: "elephant",
+        isKing: function () { return false; }
       }, {
         pos: [0,1],
-        color: "white"
+        color: "white",
+        isKing: function () { return false; }
       }, {
         pos: [0,2],
-        color: "white"
+        color: "white",
+        isKing: function () { return false; }
       }, {
         pos: [2,0],
-        color: "black"
+        color: "black",
+        isKing: function () { return false; }
       }, {
         pos: [3,2],
         color: "black",
-        id: "orangutan"
+        id: "orangutan",
+        isKing: function () { return false; }
       }
     ]});
   });
@@ -116,6 +121,33 @@ describe("Chess.Board", function () {
     it("shouldn't call placePiece if the initial position is null", function () {
       this.board.move([7,7], [0,6]);
       expect(this.board.placePiece).not.toHaveBeenCalled();
+    });
+  });
+
+  describe(".inCheck", function () {
+
+    beforeEach(function () {
+      this.checkBoard = new Chess.Board({ pieces: [
+        {
+          pos: [0,0],
+          color: "white",
+          validMoves: function () { return []; },
+          isKing: function () { return true; }
+        }, {
+          pos: [0,1],
+          color: "black",
+          validMoves: function () { return [[0,0]]; },
+          isKing: function () { return true; }
+        }
+      ]});
+    });
+
+    it("returns false when a player is not in check", function () {
+      expect(this.checkBoard.inCheck("black")).toEqual(false);
+    });
+
+    it("returns true when a player is in check", function () {
+      expect(this.checkBoard.inCheck("white")).toEqual(true);
     });
   });
 });
