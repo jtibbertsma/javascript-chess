@@ -5,6 +5,11 @@
     throw "missing dependency";
   }
 
+  function maybeAdd(moves, pos) {
+    if (Chess.Util.validPos(pos))
+      moves.push(pos);
+  }
+
   var Pawn = Chess.Pieces.Pawn = function (options) {
     this.parentClass(options);
   };
@@ -14,12 +19,31 @@
       return true;
     },
 
+    maybeAddCapture: function (moves, pos) {
+      var otherPiece = this.board.pieceAt(pos);
+      if (otherPiece  &&
+          otherPiece.color === Chess.Util.otherColor(this.color)) {
+        moves.push(pos);
+      }
+    },
+
     validMoves: function () {
-      function pawnMoves(dir) {
-        
+      var dir = this.color === "white" ? -1 : 1,
+          row = this.pos[0],
+          col = this.pos[1],
+          moves = [];
+
+      if (this.board.pieceAt([row + dir, col]) === null) {
+        maybeAdd(moves, [row + dir, col]);
+      }
+      if (this.board.pieceAt([row + dir, col]) === null && !this.moved()) {
+        maybeAdd(moves, [row + dir*2, col]);
       }
 
-      return pawnMoves(this.color === "white" ? -1 : 1);
+      this.maybeAddCapture(moves, [row + dir, col - 1]);
+      this.maybeAddCapture(moves, [row + dir, col + 1]);
+
+      return moves;
     }
   });
 })();
