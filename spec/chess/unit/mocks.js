@@ -90,7 +90,7 @@
 
   Mover.prototype = {
     move: function () {
-      this.piece.move([[Math.floor(Math.random() * 8), Math.floor(Math.random() * 8)]])
+      this.piece.move([Math.floor(Math.random() * 8), Math.floor(Math.random() * 8)])
     },
 
     unMove: function () {
