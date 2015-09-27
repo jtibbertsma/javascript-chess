@@ -18,4 +18,4 @@ Unit tests are implemented with Jasmine. Use ```npm test``` to run the test serv
 
 ### Notes
 
-* Unit test for individual pieces rely on the actual board object instead of a mock. Implementing a mock boards for each case would be more difficult than it's worth
+* Unit test for individual pieces rely on the actual board object instead of a mock. Implementing a mock board for each case would be more difficult than it's worth
