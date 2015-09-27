@@ -59,6 +59,7 @@
 
       var move = this.moves.pop();
       this.board.move(move.to, move.from);
+      this.board.pieceAt(move.from).unMove();
 
       if (move.capture !== null) {
         this.board.placePiece(move.to, move.capture);

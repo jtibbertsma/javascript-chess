@@ -49,13 +49,15 @@
         },
         44: {
           pos: [4,4],
-          color: "black"
+          color: "black",
+          unMove: function () { }
         },
         11: null,
         22: null,
         33: null,
         14: null,
-        55: null
+        55: null,
+        56: null
       }
     }
   };

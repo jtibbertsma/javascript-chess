@@ -114,6 +114,7 @@ describe("Chess.Game", function () {
     describe(".undoLastMove", function () {
       beforeEach(function () {
         var capturedPiece = { color: "white" }
+        this.piece = this.game.board.pieces['44'];
 
         this.game.moves.push({
           from: [5,6],
@@ -143,8 +144,16 @@ describe("Chess.Game", function () {
       });
 
       it("moves the piece back to its original position", function () {
+        expect(this.game.board.pieceAt([5,6])).toBeNull();
         this.game.undoLastMove();
-        expect(this.game.board.pieceAt([5,6])).toEqual({ pos: [4,4], color: "black" });
+        expect(this.game.board.pieceAt([5,6])).toEqual(this.piece);
+      });
+
+      it("calls unMove on the piece that is moved back", function () {
+        spyOn(this.piece, 'unMove');
+
+        this.game.undoLastMove();
+        expect(this.piece.unMove).toHaveBeenCalled();
       });
     });
   });

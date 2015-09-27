@@ -14,7 +14,8 @@ describe("Chess.Board", function () {
       }, {
         pos: [0,2],
         color: "white",
-        isKing: function () { return false; }
+        isKing: function () { return false; },
+        move: function (pos) { this.pos = pos; }
       }, {
         pos: [2,0],
         color: "black",
@@ -86,13 +87,6 @@ describe("Chess.Board", function () {
       expect(this.board.blackPieces().length).toEqual(3);
     });
 
-    it("sets the pos property of the moved piece", function () {
-      var piece = { pos: [0,6], color: "black" };
-      this.board.placePiece([7,7], piece);
-
-      expect(piece.pos).toEqual([7,7]);
-    });
-
     it("removes a placed piece if it's already on the board", function () {
       var piece = this.board.pieceAt([0,2]);
       this.board.placePiece([7,7], piece);
@@ -121,6 +115,21 @@ describe("Chess.Board", function () {
     it("shouldn't call placePiece if the initial position is null", function () {
       this.board.move([7,7], [0,6]);
       expect(this.board.placePiece).not.toHaveBeenCalled();
+    });
+
+    it("sets the pos property of the moved piece", function () {
+      var piece = this.board.pieceAt([0,2]);
+
+      this.board.move([0,2], [7,7]);
+      expect(piece.pos).toEqual([7,7]);
+    });
+
+    it("should use Piece.move to move the piece", function () {
+      var piece = this.board.pieceAt([0,2]);
+      spyOn(piece, 'move');
+
+      this.board.move([0,2], [7,7]);
+      expect(piece.move).toHaveBeenCalledWith([7,7]);
     });
   });
 

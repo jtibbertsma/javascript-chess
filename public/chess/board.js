@@ -38,8 +38,11 @@
      * A piece in the destination square is ignored and overwritten.
      */
     move: function (from, to) {
-      if (this.pieceAt(from)) {
-        this.placePiece(to, this.pieceAt(from));
+      var piece = this.pieceAt(from);
+
+      if (piece) {
+        this.placePiece(to, piece);
+        piece.move(to);
       }
     },
 
@@ -63,7 +66,6 @@
       }
 
       this.grid[pos[0]][pos[1]] = piece;
-      piece.pos = pos;
     },
 
     /* whitePieces
