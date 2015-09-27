@@ -39,8 +39,8 @@
       for (var key in childProto)
         newChildProto[key] = childProto[key];
       newChildProto.parentClass = ParentClass;
+      newChildProto.constructor = ChildClass;
       ChildClass.prototype = newChildProto;
-      ChildClass.prototype.constructor = ChildClass;
     }
   };
 })();
