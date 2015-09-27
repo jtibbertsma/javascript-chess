@@ -10,8 +10,16 @@
   };
 
   Chess.Util.extendo(Pawn, Chess.Pieces.Piece, {
+    isPawn: function () {
+      return true;
+    },
+
     validMoves: function () {
-      return [];
+      function pawnMoves(dir) {
+        
+      }
+
+      return pawnMoves(this.color === "white" ? -1 : 1);
     }
   });
 })();
