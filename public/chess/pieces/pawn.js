@@ -5,7 +5,13 @@
     throw "missing dependency";
   }
 
-  var Pawn = Chess.Pieces.Pawn = function () {
-
+  var Pawn = Chess.Pieces.Pawn = function (options) {
+    this.parentClass(options);
   };
+
+  Chess.Util.extendo(Pawn, Chess.Pieces.Piece, {
+    validMoves: function () {
+      return [];
+    }
+  });
 })();

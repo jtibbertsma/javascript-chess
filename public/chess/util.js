@@ -20,6 +20,16 @@
       }
 
       return false;
+    },
+
+    extendo: function (ChildClass, ParentClass, childProto) {
+      var newChildProto = {};
+      for (var key in ParentClass.prototype)
+        newChildProto[key] = ParentClass.prototype[key];
+      for (var key in childProto)
+        newChildProto[key] = childProto[key];
+      newChildProto.parentClass = ParentClass;
+      ChildClass.prototype = newChildProto;
     }
   };
 })();
