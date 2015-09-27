@@ -12,11 +12,6 @@
     }
   };
 
-  function validPos(pos) {
-    return pos[0] >= 0 && pos[1] >= 0 &&
-           pos[0] <= 7 && pos[1] <= 7;
-  }
-
   Game.prototype = {
     /* _move (private)
      *
@@ -45,12 +40,6 @@
      * valid. Handle piece capturing.
      */
     move: function (from, to) {
-      if (!validPos(from) || !validPos(to)) {
-        throw "Out of bounds position";
-      }
-
-      // This checks if the piece can't move to that spot, and also checks
-      // if the move would leave us in check.
       if (!this.validMove(from, to)) {
         throw "Invalid move";
       }
@@ -104,7 +93,10 @@
      * Return true if a move is valid.
      */
     validMove: function (from, to) {
-      return true;
+      var piece = this.board.pieceAt(from);
+      return piece &&
+             Chess.Util.posInArray(to, piece.validMoves()) &&
+             this.causesCheck(piece, to);
     },
 
     /* allValidMoves
