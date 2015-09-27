@@ -22,21 +22,21 @@
      *
      * Move a piece without validating.
      */
-    _move: function (pos1, pos2) {
-      var fromSquare = this.board.pieceAt(pos1),
-          toSquare   = this.board.pieceAt(pos2);
+    _move: function (from, to) {
+      var fromSquare = this.board.pieceAt(from),
+          toSquare   = this.board.pieceAt(to);
 
       if (toSquare !== null) {
         this.capturedPieces[toSquare.color].push(toSquare);
       }
 
       this.moves.push({
-        from: pos1,
-        to: pos2,
+        from: from,
+        to: to,
         capture: toSquare
       });
 
-      this.board.move(pos1, pos2);
+      this.board.move(from, to);
     },
 
     /* move
@@ -44,18 +44,18 @@
      * Move a piece to a new position. Before moving, ensure that the move is
      * valid. Handle piece capturing.
      */
-    move: function (pos1, pos2) {
-      if (!validPos(pos1) || !validPos(pos2)) {
+    move: function (from, to) {
+      if (!validPos(from) || !validPos(to)) {
         throw "Out of bounds position";
       }
 
       // This checks if the piece can't move to that spot, and also checks
       // if the move would leave us in check.
-      if (!this.validMove(pos1, pos2)) {
+      if (!this.validMove(from, to)) {
         throw "Invalid move";
       }
 
-      this._move(pos1, pos2);
+      this._move(from, to);
     },
 
     /* undoLastMove
@@ -99,6 +99,14 @@
       return !inCheck;
     },
 
+    /* validMove
+     *
+     * Return true if a move is valid.
+     */
+    validMove: function (from, to) {
+      return true;
+    },
+
     /* allValidMoves
      *
      * Get an array of all legal moves for a given position. If the player is in
@@ -114,7 +122,7 @@
       var validMoves = piece.validMoves()
         .filter(this.causesCheck.bind(this, piece));
 
-      // in the future, handle en passant and castling here
+      // in the future, handle en passant and castling here ??
 
       return validMoves;
     },
