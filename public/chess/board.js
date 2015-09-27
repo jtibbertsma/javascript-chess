@@ -4,7 +4,7 @@
   }
 
   var Board = Chess.Board = function (options) {
-    this.pieces = options.pieces;
+    var pieces = options.pieces;
     this.grid = [];
 
     this.kings = { black: null, white: null };
@@ -17,8 +17,8 @@
       this.grid.push(row);
     }
 
-    for (var i = 0; i < this.pieces.length; ++i) {
-      var piece = this.pieces[i]
+    for (var i = 0; i < pieces.length; ++i) {
+      var piece = pieces[i]
       this.grid[piece.pos[0]][piece.pos[1]] = piece;
 
       if (piece.isKing()) {
