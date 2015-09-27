@@ -108,7 +108,7 @@ describe("Chess.Pieces.Pawn", function () {
       });
 
       it("can't move backwards", function () {
-        var piece = this.board.pieceAt([2,3]);
+        var piece = this.board.pieceAt([2,1]);
         expect(piece.validMoves()).not.toContain([3,1]);
       });
 
