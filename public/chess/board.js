@@ -28,10 +28,6 @@
     }
   };
 
-  function otherColor(color) {
-    return color === "white" ? "black" : "white";
-  }
-
   Board.prototype = {
     /* move
      *
@@ -111,7 +107,7 @@
      */
     inCheck: function (color) {
       var king = this.kings[color],
-          opponentPieces = this.piecesOfColor(otherColor(color));
+          opponentPieces = this.piecesOfColor(Chess.Util.otherColor(color));
 
       for (var i = 0; i < opponentPieces.length; ++i) {
         if (Chess.Util.posInArray(king.pos, opponentPieces[i].validMoves())) {
