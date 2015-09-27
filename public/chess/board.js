@@ -20,6 +20,7 @@
     for (var i = 0; i < pieces.length; ++i) {
       var piece = pieces[i]
       this.grid[piece.pos[0]][piece.pos[1]] = piece;
+      piece.board = this;
 
       if (piece.isKing()) {
         this.kings[piece.color] = piece;
@@ -66,6 +67,7 @@
       }
 
       this.grid[pos[0]][pos[1]] = piece;
+      piece.board = this;
     },
 
     /* whitePieces

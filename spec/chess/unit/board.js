@@ -29,6 +29,13 @@ describe("Chess.Board", function () {
     ]});
   });
 
+  it("constructor should set board property of given pieces", function () {
+    var piece = this.board.pieceAt([0,0]);
+
+    expect(piece.board).toBeDefined();
+    expect(piece.board).toEqual(this.board);
+  });
+
   describe("Getting pieces of a given color", function () {
     function searchForId(pieces, id) {
       for (var i = 0; i < pieces.length; ++i) {
@@ -36,7 +43,6 @@ describe("Chess.Board", function () {
           return true;
         }
       }
-
       return false;
     }
 
@@ -99,6 +105,14 @@ describe("Chess.Board", function () {
       this.board.placePiece([2,0], piece);
 
       expect(this.board.blackPieces().length).toEqual(1);
+    });
+
+    it("should set the board property of the given piece", function () {
+      var piece = { pos: [6,1], color: "black" };
+      this.board.placePiece([7,7], piece);
+
+      expect(piece.board).toBeDefined();
+      expect(piece.board).toEqual(this.board);
     });
   });
 
