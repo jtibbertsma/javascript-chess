@@ -15,3 +15,7 @@ I want to write a chess AI in javascript.
 ## Tests
 
 Unit tests are implemented with Jasmine. Use ```npm test``` to run the test server, and navigate to localhost:8080 to see the results.
+
+### Notes
+
+* Unit test for individual pieces rely on the actual board object instead of a mock. Implementing a mock boards for each case would be more difficult than it's worth
