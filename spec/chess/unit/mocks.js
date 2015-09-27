@@ -83,4 +83,18 @@
   };
 
   Mocks.causesCheckPiece = { pos: [0,0], color: "white" };
+
+  var Mover = Mocks.Mover = function (piece) {
+    this.piece = piece;
+  };
+
+  Mover.prototype = {
+    move: function () {
+      this.piece.move([[Math.floor(Math.random() * 8), Math.floor(Math.random() * 8)]])
+    },
+
+    unMove: function () {
+      this.piece.unMove();
+    }
+  }
 })();

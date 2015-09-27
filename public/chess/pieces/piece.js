@@ -13,14 +13,10 @@
   Piece.prototype = {
     /* virtual functions
      *
-     * We want to be able to check if a piece is a rook, king, or pawn, so that
+     * We want to be able to check if a piece is a king or pawn, so that
      * we can check for positions such as en passant, possible castles, etc.
      */
     isKing: function () {
-      return false;
-    },
-
-    isRook: function () {
       return false;
     },
 
