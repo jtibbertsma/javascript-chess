@@ -59,7 +59,13 @@
         55: null,
         56: null
       }
+
+      function x() { }
+
+      for (var p in board.pieces)
+        board.pieces[p] && (board.pieces[p].unMove = x);
     }
+
   };
 
   var Board = Mocks.CausesCheckBoard = function (piece) {
@@ -82,7 +88,7 @@
     }
   };
 
-  Mocks.causesCheckPiece = { pos: [0,0], color: "white" };
+  Mocks.causesCheckPiece = { pos: [0,0], color: "white", unMove: function () { } };
 
   var Mover = Mocks.Mover = function (piece) {
     this.piece = piece;
