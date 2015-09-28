@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" href="css/app.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
-  <script src="app.js"></script>
+  <script src="angular-app/app.js"></script>
 
   <script src="chess/util.js"></script>
   <script src="chess/game.js"></script>
@@ -24,21 +24,6 @@
   <script src="chess/pieces/pawn.js"></script>
 </head>
 <body>
-  <div id="board" ng-controller="BoardCtrl">
-    <div
-      ng-repeat="square in view"
-      ng-class="{
-        square:        true,
-        white:         square.whiteSquare,
-        black:        !square.whiteSquare,
-       'white-piece':  square.whitePiece,
-       'black-piece': !square.whitePiece,
-        selected:      square.selected,
-        destination:   square.destination
-      }"
-    >
-      {{ square.content }}
-    </div>
-  </div>
+  <div class="chess-board" chess-board-view></div>
 </body>
 </html>
