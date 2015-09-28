@@ -34,8 +34,10 @@
       return false;
     },
 
-    extendo: function (ChildClass, ParentClass, childProto) {
-      var newChildProto = {};
+    extendo: function (ChildName, ParentName, childProto) {
+      var ParentClass = Chess.Pieces[ParentName],
+          ChildClass = function (options) { this.parentClass(options); },
+          newChildProto = {};
       /* shallow copy parent prototype */
       for (var key in ParentClass.prototype)
         newChildProto[key] = ParentClass.prototype[key];
@@ -45,6 +47,7 @@
       newChildProto.parentClass = ParentClass;
       newChildProto.constructor = ChildClass;
       ChildClass.prototype = newChildProto;
+      Chess.Pieces[ChildName] = ChildClass;
     }
   };
 })();

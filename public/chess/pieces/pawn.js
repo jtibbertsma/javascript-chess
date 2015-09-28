@@ -10,11 +10,7 @@
       moves.push(pos);
   }
 
-  var Pawn = Chess.Pieces.Pawn = function (options) {
-    this.parentClass(options);
-  };
-
-  Chess.Util.extendo(Pawn, Chess.Pieces.Piece, {
+  Chess.Util.extendo('Pawn', 'Piece', {
     isPawn: function () {
       return true;
     },
