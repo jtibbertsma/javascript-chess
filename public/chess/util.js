@@ -36,8 +36,12 @@
 
     extendo: function (childName, parentName, childProto) {
       var ParentClass = Chess.Pieces[parentName],
-          ChildClass = function (options) { this.parentClass(options); },
-          newChildProto = {};
+          initialize = childProto.initialize || function () { },
+          newChildProto = {},
+          ChildClass = function (options) {
+            initialize.call(this, options);
+            ParentClass.call(this, options);
+          };
       /* shallow copy parent prototype */
       for (var key in ParentClass.prototype)
         newChildProto[key] = ParentClass.prototype[key];
