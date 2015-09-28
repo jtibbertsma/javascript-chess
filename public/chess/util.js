@@ -3,9 +3,37 @@
     Chess = {};
   }
 
+  function oneOnEitherSide(pieces, color, row, _col, Piece) {
+    [_col, 8 - 1 - _col].forEach(function (col) {
+      pieces.push(new Piece({ pos: [row, col], color: color }));
+    });
+  }
+
+  function valueInsert(pieces, color, row) {
+    oneOnEitherSide(pieces, color, row, 0, Chess.Pieces.Rook);
+    oneOnEitherSide(pieces, color, row, 1, Chess.Pieces.Knight);
+    oneOnEitherSide(pieces, color, row, 2, Chess.Pieces.Bishop);
+
+    pieces.push(new Chess.Pieces.Queen({ pos: [row, 3], color: color }));
+    pieces.push(new Chess.Pieces.King({ pos: [row, 4], color: color }));
+  }
+
+  function pawnInsert(pieces, color, row) {
+    for (var i = 0; i < 8; ++i) {
+      pieces.push(new Chess.Pieces.Pawn({ pos: [row, i], color: color }));
+    }
+  }
+
   Chess.Util = {
     defaultPieces: function () {
-      return [];
+      var pieces = [];
+
+      valueInsert(pieces, "black", 0);
+      valueInsert(pieces, "white", 7);
+      pawnInsert(pieces, "black", 1);
+      pawnInsert(pieces, "white", 6);
+
+      return pieces;
     },
 
     otherColor: function (color) {
