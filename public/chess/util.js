@@ -34,6 +34,25 @@
       return false;
     },
 
+    /* for unit tests */
+    coordSort: function (moves) {
+      return moves.sort(function (c1, c2) {
+        if (c1[0] === c2[0]) {
+          if (c1[1] === c2[1]) {
+            return 0;
+          } else if (c1[1] < c2[1]) {
+            return -1;
+          } else {
+            return 1;
+          }
+        } else if (c1[0] < c2[0]) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+    },
+
     extendo: function (childName, parentName, childProto) {
       var ParentClass = Chess.Pieces[parentName],
           initialize = childProto.initialize || function () { },
