@@ -56,6 +56,16 @@
      */
     moved: function () {
       return this._moves !== 0;
+    },
+
+    /* validMoves
+     *
+     * An unneccessary virtual function. This is here so the unit tests for pieces
+     * will fail with more reasonable failures before I've added anything to the
+     * prototype.
+     */
+    validMoves: function () {
+      return [];
     }
   };
 })();
