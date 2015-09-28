@@ -5,7 +5,7 @@
     throw "missing dependency";
   }
 
-  var Rook = Chess.Pieces.Rook = function () {
+  Chess.Util.extendo('Rook', 'SlidingPiece', {
 
-  };
+  });
 })();

@@ -5,7 +5,7 @@
     throw "missing dependency";
   }
 
-  var Bishop = Chess.Pieces.Bishop = function () {
+  Chess.Util.extendo('Bishop', 'SlidingPiece', {
 
-  };
+  });
 })();

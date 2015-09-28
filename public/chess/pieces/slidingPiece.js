@@ -5,7 +5,7 @@
     throw "missing dependency";
   }
 
-  var SlidingPiece = Chess.Pieces.SlidingPiece = function () {
+  Chess.Util.extendo('SlidingPiece', 'Piece', {
 
-  };
+  });
 })();

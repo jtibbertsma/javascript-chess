@@ -5,7 +5,7 @@
     throw "missing dependency";
   }
 
-  var Knight = Chess.Pieces.Knight = function () {
+  Chess.Util.extendo('Knight', 'SteppingPiece', {
 
-  };
+  });
 })();
