@@ -4,7 +4,7 @@ angular.module('JSChess', [])
     function gameFactory() {
       var o = {
         reset: function () {
-          o.data = new Chess.Game({
+          o.game = new Chess.Game({
             board: new Chess.Board({
               pieces: Chess.Util.defaultPieces()
             })
@@ -34,8 +34,7 @@ angular.module('JSChess', [])
           content: "",
           selected: false,
           destination: false,
-          whiteSquare: isWhite(i),
-          whitePiece: false
+          whiteSquare: isWhite(i)
         });
       }
 
