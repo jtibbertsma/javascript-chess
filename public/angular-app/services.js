@@ -1,5 +1,4 @@
 angular.module('ChessServices', [])
-  
   .factory('game', [
     function gameFactory() {
       var o = {
@@ -17,8 +16,8 @@ angular.module('ChessServices', [])
     }
   ])
 
-  .factory('boardView', ['game',
-    function boardViewFactory(game) {
+  .factory('boardData', ['game',
+    function boardDataFactory(game) {
       var view = [];
 
       function isWhite(idx) {

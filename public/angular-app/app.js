@@ -1,1 +1,4 @@
-angular.module('JSChess', ['ChessServices']);
+angular.module('JSChess', [
+  'ChessServices',
+  'ChessDirectives'
+]);
