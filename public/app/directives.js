@@ -1,6 +1,6 @@
 angular.module('ChessDirectives', [])
-  .directive('chessBoardView', ['gameData',
-    function chessBoardViewDirective(gameData) {
+  .directive('chessBoardView',
+    function chessBoardViewDirective() {
       return {
         templateUrl: '/templates/square.html',
         link: function (scope, element) {
@@ -13,7 +13,7 @@ angular.module('ChessDirectives', [])
         }
       };
     }
-  ])
+  )
 
   .directive('boardSquare', ['gameData',
     function boardSquareDirective(gameData) {
