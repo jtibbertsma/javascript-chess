@@ -1,5 +1,5 @@
 angular.module('ChessServices', [])
-  .factory('game', [
+  .factory('gameData', [
     function gameFactory() {
       var o = {
         reset: function () {
@@ -13,30 +13,5 @@ angular.module('ChessServices', [])
 
       o.reset();
       return o;
-    }
-  ])
-
-  .factory('boardData', ['game',
-    function boardDataFactory(game) {
-      var view = [];
-
-      function isWhite(idx) {
-        if (Math.floor(idx / 8) % 2 === 0) {
-          idx += 1;
-        }
-
-        return idx % 2 === 1;
-      }
-
-      for (var i = 0; i < 64; ++i) {
-        view.push({
-          content: "",
-          selected: false,
-          destination: false,
-          whiteSquare: isWhite(i)
-        });
-      }
-
-      return view;
     }
   ]);
