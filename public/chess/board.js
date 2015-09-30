@@ -84,14 +84,32 @@
 
     /* piecesOfColor
      *
-     * Do the actual work of whitePieces and blackPieces.
+     * Get all pieces of a particular color, used by whitePieces and blackPieces.
      */
     piecesOfColor: function (color) {
+      return this.getPieces(function (piece) { return piece.color === color; });
+    },
+
+    /* allPieces
+     *
+     * Get all pieces on the board.
+     */
+    allPieces: function () {
+      return this.getPieces(function () { return true; });
+    },
+
+    /* getPieces
+     *
+     * Get all pieces that have a given property. The prop argument is a function
+     * that gets passed a piece, and should return true if the piece should be
+     * included.
+     */
+    getPieces: function (prop) {
       var pieces = [];
 
       for (var i = 0; i < 8; ++i) {
         for (var j = 0; j < 8; j++) {
-          if (this.grid[i][j] && this.grid[i][j].color === color) {
+          if (this.grid[i][j] && prop(this.grid[i][j])) {
             pieces.push(this.grid[i][j]);
           }
         }
