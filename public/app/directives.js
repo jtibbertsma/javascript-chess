@@ -48,8 +48,12 @@ angular.module('ChessDirectives', [])
       return {
         require: '^chessBoardView',
         link: function ($scope, $element, $attrs) {
-          var piece = $scope.piece;
+          var pos = $scope.piece.pos;
 
+          $attrs.$set('src', pieceUrls.get($scope.piece));
+          $attrs.$addClass('piece');
+
+          $attrs.$set('style', "top:" + 50 * pos[0] + 'px;left:' + 50 * pos[1] + 'px;');
         }
       }
     }
