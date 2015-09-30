@@ -14,4 +14,23 @@ angular.module('ChessServices', [])
       o.reset();
       return o;
     }
-  ]);
+  ])
+
+  .factory('pieceUrls', 
+    function pieceUrlsFactory() {
+      var map = {
+        white: {
+
+        },
+        black: {
+
+        }
+      };
+
+      map.get = function (piece) {
+
+      };
+
+      return map;
+    }
+  );

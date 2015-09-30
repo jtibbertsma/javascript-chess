@@ -2,7 +2,7 @@ angular.module('ChessDirectives', [])
   .directive('chessBoardView', ['gameData',
     function chessBoardViewDirective(gameData) {
       return {
-        templateUrl: '/templates/square.html',
+        templateUrl: '/templates/boardContent.html',
         controller: function ($scope) {
           function arrToIdx(i, j) {
             return i * 8 + j;
@@ -28,6 +28,7 @@ angular.module('ChessDirectives', [])
         link: function ($scope, $element, $attrs, ctrl) {
           $attrs.$addClass("chess-board");
           $scope.squares = [];
+          $scope.pieces = ctrl.game.board.allPieces();
           $scope.player = "white";
 
           for (var i = 0; i < 64; ++i) {
@@ -39,6 +40,18 @@ angular.module('ChessDirectives', [])
           ctrl.setSelectable();
         }
       };
+    }
+  ])
+
+  .directive('boardPiece', ['pieceUrls',
+    function boardPieceDirective(pieceUrls) {
+      return {
+        require: '^chessBoardView',
+        link: function ($scope, $element, $attrs) {
+          var piece = $scope.piece;
+
+        }
+      }
     }
   ])
 
