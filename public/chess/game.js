@@ -120,12 +120,12 @@
       return validMoves;
     },
 
-    /* movablePositions
+    /* selectablePositions
      *
      * Given a color, return an array of the coordinates of each of that color's
      * pieces that are able to move.
      */
-    movablePositions: function (color) {
+    selectablePositions: function (color) {
       return this.board.piecesOfColor(color)
         .map(function (piece) {
           return piece.pos;
@@ -144,9 +144,9 @@
     checkmate: function () {
       // This implementation won't work, because it'll return a truthy value
       // if there's a stalemate.
-      if (this.movablePositions("white").length === 0) {
+      if (this.selectablePositions("white").length === 0) {
         return "white";
-      } else if (this.movablePositions("black").length === 0) {
+      } else if (this.selectablePositions("black").length === 0) {
         return "black";
       }
 

@@ -239,7 +239,7 @@ describe("Chess.Game", function () {
     });
   });
 
-  describe(".movablePositions", function () {
+  describe(".selectablePositions", function () {
 
     beforeEach(function () {
       var mockBoard = Mocks.generalBoard;
@@ -249,13 +249,13 @@ describe("Chess.Game", function () {
     });
 
     it("returns positions that have a piece with valid moves", function () {
-      expect(this.game.movablePositions("white")).toEqual([[0,0]]);
+      expect(this.game.selectablePositions("white")).toEqual([[0,0]]);
     });
 
     it("returns an empty array if there are no possible moves", function () {
       this.game.board.move([1,3], [1,1]);
 
-      expect(this.game.movablePositions("white")).toEqual([]);
+      expect(this.game.selectablePositions("white")).toEqual([]);
     });
   });
 });
