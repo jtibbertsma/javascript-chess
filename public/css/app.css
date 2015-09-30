@@ -17,3 +17,7 @@
 .square.black {
   background: #70440F;
 }
+
+.square.selectable {
+  background: red;
+}
