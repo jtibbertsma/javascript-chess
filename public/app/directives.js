@@ -25,9 +25,11 @@ angular.module('ChessDirectives', [])
             game: gameData.game,
             squareSize: 64,
             selectedSquare: null,
-            setProperty: function (prop) {
+            setProperty: function (prop, collection) {
               this.resetProperty(prop);
-
+              collection.forEach(function (pos) {
+                $scope.squares[arrToIdx(pos[0], pos[1])][prop] = true;
+              });
             },
 
             resetProperty: function (prop) {
@@ -37,17 +39,16 @@ angular.module('ChessDirectives', [])
             },
 
             setSelectable: function () {
-              this.resetProperty('selectable');
-              this.game.selectablePositions($scope.player).forEach(function (pos) {
-                $scope.squares[arrToIdx(pos[0], pos[1])].selectable = true;
-              });
+              var selectable = this.game.selectablePositions($scope.player);
+              this.setProperty('selectable', selectable);
             },
 
             selectSquare: function (idx) {
-              this.resetProperty('movable');
-              this.game.allValidMoves(idxToArr(idx)).forEach(function (pos) {
-                $scope.squares[arrToIdx(pos[0], pos[1])].moveable = true;
-              });
+              this.resetProperty('selected');
+              $scope.squares[idx].selected = true;
+
+              var movable = this.game.allValidMoves(idxToArr(idx));
+              this.setProperty('movable', movable);
             }
           }
         },
@@ -95,18 +96,27 @@ angular.module('ChessDirectives', [])
           $attrs.$addClass("square");
           $attrs.$addClass(isWhite($scope.$index) ? "white" : "black");
 
-          if (square.selectable) {
-            $attrs.$addClass("selectable");
-          }
-
           $element.bind('click', function () {
             if (ctrl.selectedSquare !== null && square.selected) {
-              console.log("First");
+              console.log("Do move");
             } else if (square.selectable) {
               ctrl.selectSquare($attrs.boardSquare);
             } else {
               console.log("Third");
             }
+          });
+
+          $scope.$watch('square', function () {
+            function handleProperty(prop) {
+              if (square[prop]) {
+                $attrs.$addClass(prop);
+              } else {
+                $attrs.$removeClass(prop);
+              }
+            }
+
+            handleProperty('selectable');
+            handleProperty('movable');
           });
         }
       }
