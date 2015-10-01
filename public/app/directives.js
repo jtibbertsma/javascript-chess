@@ -8,27 +8,11 @@ angular.module('ChessDirectives', [])
             return i * 8 + j;
           }
 
-          return {
-            game: gameData.game,
-            resetProperty: function (prop) {
-              $scope.squares.forEach(function (square) {
-                square[prop] = false;
-              });
-            },
-
-            setSelectable: function () {
-              this.resetProperty('selectable');
-              this.game.movablePositions($scope.player).forEach(function (pos) {
-                $scope.squares[arrToIdx(pos[0], pos[1])].selectable = true;
-              });
-            }
+          function idxToArr(idx) {
+            return [Math.floor(idx / 8), idx % 8];
           }
-        },
 
-        link: function ($scope, $element, $attrs, ctrl) {
-          $attrs.$addClass("chess-board");
           $scope.squares = [];
-          $scope.pieces = ctrl.game.board.allPieces();
           $scope.player = "white";
 
           for (var i = 0; i < 64; ++i) {
@@ -37,6 +21,39 @@ angular.module('ChessDirectives', [])
             });
           }
 
+          return {
+            game: gameData.game,
+            selectedSquare: null,
+            setProperty: function (prop) {
+              this.resetProperty(prop);
+
+            },
+
+            resetProperty: function (prop) {
+              $scope.squares.forEach(function (square) {
+                square[prop] = false;
+              });
+            },
+
+            setSelectable: function () {
+              this.resetProperty('selectable');
+              this.game.selectablePositions($scope.player).forEach(function (pos) {
+                $scope.squares[arrToIdx(pos[0], pos[1])].selectable = true;
+              });
+            },
+
+            selectSquare: function (idx) {
+              this.resetProperty('movable');
+              this.game.allValidMoves(idxToArr(idx)).forEach(function (pos) {
+                $scope.squares[arrToIdx(pos[0], pos[1])].moveable = true;
+              });
+            }
+          }
+        },
+
+        link: function ($scope, $element, $attrs, ctrl) {
+          $attrs.$addClass("chess-board");
+          $scope.pieces = ctrl.game.board.allPieces();
           ctrl.setSelectable();
         }
       };
@@ -53,7 +70,7 @@ angular.module('ChessDirectives', [])
           $attrs.$set('src', pieceUrls.get($scope.piece));
           $attrs.$addClass('piece');
 
-          $attrs.$set('style', "top:" + 50 * pos[0] + 'px;left:' + 50 * pos[1] + 'px;');
+          $attrs.$set('style', 'top:' + 50 * pos[0] + 'px;left:' + 50 * pos[1] + 'px;');
         }
       }
     }
@@ -71,12 +88,24 @@ angular.module('ChessDirectives', [])
             return idx % 2 === 1;
           }
 
-          $attrs.$addClass("square");
-          $attrs.$addClass(isWhite($scope.$index) ? "white" : "black")
+          var square = $scope.square;
 
-          // if ($scope.square.selectable) {
-          //   $attrs.$addClass("selectable");
-          // }
+          $attrs.$addClass("square");
+          $attrs.$addClass(isWhite($scope.$index) ? "white" : "black");
+
+          if (square.selectable) {
+            $attrs.$addClass("selectable");
+          }
+
+          $element.bind('click', function () {
+            if (ctrl.selectedSquare !== null && square.selected) {
+              console.log("First");
+            } else if (square.selectable) {
+              ctrl.selectSquare($attrs.boardSquare);
+            } else {
+              console.log("Third");
+            }
+          });
         }
       }
     }
