@@ -44,12 +44,20 @@ angular.module('ChessDirectives', [])
             },
 
             selectSquare: function (idx) {
-              this.resetProperty('selected');
-              $scope.squares[idx].selected = true;
-              this.selectedSquare = idx;
+              this.setSelectable();
+              $scope.squares[idx].selectable = false;
+              this.selectedSquare = idxToArr(idx);
 
               var movable = this.game.allValidMoves(idxToArr(idx));
               this.setProperty('movable', movable);
+            },
+
+            makeMove: function (idx) {
+              var dest = idxToArr(idx);
+              this.game.move(this.selectedSquare, dest);
+              $scope.player = Chess.Util.otherColor($scope.player);
+              this.resetProperty('movable');
+              this.setSelectable();
             }
           }
         },
@@ -73,8 +81,10 @@ angular.module('ChessDirectives', [])
           $attrs.$set('src', pieceUrls.get($scope.piece));
           $attrs.$addClass('piece');
 
-          $element.css('top', '' + ctrl.squareSize * piece.pos[0] + 'px');
-          $element.css('left', '' + ctrl.squareSize * piece.pos[1] + 'px');
+          $scope.$watchCollection('piece.pos', function () {
+            $element.css('top', '' + ctrl.squareSize * piece.pos[0] + 'px');
+            $element.css('left', '' + ctrl.squareSize * piece.pos[1] + 'px');
+          })
         }
       }
     }
@@ -99,11 +109,12 @@ angular.module('ChessDirectives', [])
 
           $element.bind('click', function () {
             if (ctrl.selectedSquare !== null && square.movable) {
-              console.log("Do move");
+              ctrl.makeMove($attrs.boardSquare);
             } else if (square.selectable) {
               ctrl.selectSquare($attrs.boardSquare);
             } else {
-              console.log("Third");
+              ctrl.setSelectable();
+              ctrl.resetProperty('movable');
             }
             $scope.$parent.$digest();
           });
