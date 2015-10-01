@@ -16,7 +16,7 @@
 }
 
 .square.black {
-  background: #70440F;
+  background: #418EAF;
 }
 
 .piece {
@@ -25,10 +25,19 @@
 }
 
 .square.selectable:hover {
-  background: red;
   cursor: pointer;
 }
 
-.square.movable {
-  background: pink;
+.square.white.movable,
+.square.white.selectable:hover {
+  background: #BF9FCB;
+}
+
+.square.black.movable,
+.square.black.selectable:hover {
+  background: #865699;
+}
+
+.square.movable:hover {
+  cursor: pointer;
 }

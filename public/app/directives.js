@@ -46,6 +46,7 @@ angular.module('ChessDirectives', [])
             selectSquare: function (idx) {
               this.resetProperty('selected');
               $scope.squares[idx].selected = true;
+              this.selectedSquare = idx;
 
               var movable = this.game.allValidMoves(idxToArr(idx));
               this.setProperty('movable', movable);
@@ -67,13 +68,13 @@ angular.module('ChessDirectives', [])
       return {
         require: '^chessBoardView',
         link: function ($scope, $element, $attrs, ctrl) {
-          var pos = $scope.piece.pos;
+          var piece = $scope.piece;
 
           $attrs.$set('src', pieceUrls.get($scope.piece));
           $attrs.$addClass('piece');
 
-          $element.css('top', '' + ctrl.squareSize * pos[0] + 'px');
-          $element.css('left', '' + ctrl.squareSize * pos[1] + 'px');
+          $element.css('top', '' + ctrl.squareSize * piece.pos[0] + 'px');
+          $element.css('left', '' + ctrl.squareSize * piece.pos[1] + 'px');
         }
       }
     }
@@ -97,26 +98,14 @@ angular.module('ChessDirectives', [])
           $attrs.$addClass(isWhite($scope.$index) ? "white" : "black");
 
           $element.bind('click', function () {
-            if (ctrl.selectedSquare !== null && square.selected) {
+            if (ctrl.selectedSquare !== null && square.movable) {
               console.log("Do move");
             } else if (square.selectable) {
               ctrl.selectSquare($attrs.boardSquare);
             } else {
               console.log("Third");
             }
-          });
-
-          $scope.$watch('square', function () {
-            function handleProperty(prop) {
-              if (square[prop]) {
-                $attrs.$addClass(prop);
-              } else {
-                $attrs.$removeClass(prop);
-              }
-            }
-
-            handleProperty('selectable');
-            handleProperty('movable');
+            $scope.$parent.$digest();
           });
         }
       }

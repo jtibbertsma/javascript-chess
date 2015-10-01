@@ -1,2 +1,5 @@
 <img ng-repeat="piece in pieces" board-piece></img>
-<div ng-repeat="square in squares" board-square="{{$index}}"></div>
+<div ng-repeat="square in squares"
+     ng-class="{selectable: square.selectable, movable: square.movable}"
+     board-square="{{$index}}">
+</div>
