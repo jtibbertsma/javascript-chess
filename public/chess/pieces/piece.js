@@ -58,6 +58,35 @@
       return this._moves !== 0;
     },
 
+    /* add
+     *
+     * Given a position and a delta, get a new position.
+     */
+    add: function (pos, delta) {
+      return [pos[0] + delta[0], pos[1] + delta[1]];
+    },
+
+    /* validPos
+     *
+     * Return true if the given position is on the board.
+     */
+    validPos: function (pos) {
+      function validCoord(i) {
+        return i < 8 && i >= 0;
+      }
+
+      return validCoord(pos[0]) && validCoord(pos[1]);
+    },
+
+    /* maybeAppend
+     *
+     * Append a position to an array of positions if it's valid.
+     */
+    maybeAppend: function (moves, pos) {
+      if (this.validPos(pos))
+        moves.push(pos);
+    },
+
     /* validMoves
      *
      * An unneccessary virtual function. This is here so the unit tests for pieces

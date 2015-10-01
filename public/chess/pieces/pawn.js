@@ -5,16 +5,16 @@
     throw "missing dependency";
   }
 
-  function maybeAdd(moves, pos) {
-    if (Chess.Util.validPos(pos))
-      moves.push(pos);
-  }
-
   Chess.Util.extendo('Pawn', 'Piece', {
     isPawn: function () {
       return true;
     },
 
+    /* maybeAddCapture
+     *
+     * Add a position to an array of moves if that position contains an
+     * enemy piece.
+     */
     maybeAddCapture: function (moves, pos) {
       var otherPiece = this.board.pieceAt(pos);
       if (otherPiece  &&
@@ -30,10 +30,10 @@
           moves = [];
 
       if (this.board.pieceAt([row + dir, col]) === null) {
-        maybeAdd(moves, [row + dir, col]);
+        this.maybeAppend(moves, [row + dir, col]);
       }
       if (this.board.pieceAt([row + dir, col]) === null && !this.moved()) {
-        maybeAdd(moves, [row + dir*2, col]);
+        this.maybeAppend(moves, [row + dir*2, col]);
       }
 
       this.maybeAddCapture(moves, [row + dir, col - 1]);

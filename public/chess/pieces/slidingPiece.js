@@ -6,6 +6,13 @@
   }
 
   Chess.Util.extendo('SlidingPiece', 'Piece', {
+    // validMoves: function () {
+    //   var dirs = this.moveDirs(),
+    //       moves = [];
 
+    //   for (var i = 0; i < dirs.length; ++i) {
+        
+    //   }
+    // }
   });
 })();
