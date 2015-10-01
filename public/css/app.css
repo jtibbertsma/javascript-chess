@@ -9,7 +9,6 @@
   width: 64px;
   height: 64px;
   float: left;
-  cursor: pointer;
 }
 
 .square.white {
@@ -27,6 +26,7 @@
 
 .square.selectable:hover {
   background: red;
+  cursor: pointer;
 }
 
 .square.movable {
