@@ -62,9 +62,9 @@ angular.module('ChessDirectives', [])
           }
         },
 
-        link: function ($scope, $element, $attrs, ctrl) {
-          $attrs.$addClass("chess-board");
-          $scope.pieces = ctrl.game.board.allPieces();
+        link: function (scope, $element, attrs, ctrl) {
+          attrs.$addClass("chess-board");
+          scope.pieces = ctrl.game.board.allPieces();
           ctrl.setSelectable();
         }
       };
@@ -75,15 +75,15 @@ angular.module('ChessDirectives', [])
     function boardPieceDirective(pieceUrls) {
       return {
         require: '^chessBoardView',
-        link: function ($scope, $element, $attrs, ctrl) {
-          var piece = $scope.piece;
+        link: function (scope, element, attrs, ctrl) {
+          var piece = scope.piece;
 
-          $attrs.$set('src', pieceUrls.get($scope.piece));
-          $attrs.$addClass('piece');
+          attrs.$set('src', pieceUrls.get(scope.piece));
+          attrs.$addClass('piece');
 
-          $scope.$watchCollection('piece.pos', function () {
-            $element.css('top', '' + ctrl.squareSize * piece.pos[0] + 'px');
-            $element.css('left', '' + ctrl.squareSize * piece.pos[1] + 'px');
+          scope.$watchCollection('piece.pos', function () {
+            element.css('top', '' + ctrl.squareSize * piece.pos[0] + 'px');
+            element.css('left', '' + ctrl.squareSize * piece.pos[1] + 'px');
           })
         }
       }
@@ -94,7 +94,7 @@ angular.module('ChessDirectives', [])
     function boardSquareDirective() {
       return {
         require: '^chessBoardView',
-        link: function ($scope, $element, $attrs, ctrl) {
+        link: function (scope, element, attrs, ctrl) {
           function isWhite(idx) {
             if (Math.floor(idx / 8) % 2 === 0) {
               idx += 1;
@@ -102,22 +102,23 @@ angular.module('ChessDirectives', [])
             return idx % 2 === 1;
           }
 
-          var square = $scope.square;
+          var square = scope.square;
 
-          $attrs.$addClass("square");
-          $attrs.$addClass(isWhite($scope.$index) ? "white" : "black");
+          attrs.$addClass("square");
+          attrs.$addClass(isWhite(scope.$index) ? "white" : "black");
 
-          $element.bind('click', function () {
+          scope.selectSquare = onClick;
+
+          function onClick() {
             if (ctrl.selectedSquare !== null && square.movable) {
-              ctrl.makeMove($attrs.boardSquare);
+              ctrl.makeMove(attrs.boardSquare);
             } else if (square.selectable) {
-              ctrl.selectSquare($attrs.boardSquare);
+              ctrl.selectSquare(attrs.boardSquare);
             } else {
               ctrl.setSelectable();
               ctrl.resetProperty('movable');
             }
-            $scope.$parent.$digest();
-          });
+          }
         }
       }
     }
