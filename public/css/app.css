@@ -9,7 +9,7 @@
   width: 64px;
   height: 64px;
   float: left;
-  transition: background 75ms linear;
+  transition: background 90ms linear;
 }
 
 .square.white {
@@ -20,7 +20,8 @@
   background: #418EAF;
 }
 
-.square.selectable:hover {
+.square.selectable:hover,
+.square.movable:hover {
   cursor: pointer;
 }
 
@@ -32,10 +33,6 @@
 .square.black.movable,
 .square.black.selectable:hover {
   background: #865699;
-}
-
-.square.movable:hover {
-  cursor: pointer;
 }
 
 .piece {
