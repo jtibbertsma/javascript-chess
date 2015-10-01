@@ -25,6 +25,11 @@
   }
 
   Chess.Util = {
+    /* defaultPieces
+     *
+     * Create an array containing all the default pieces to put on a chessboard
+     * to start a game. Give each piece the correct pos attribute.
+     */
     defaultPieces: function () {
       var pieces = [];
 
@@ -73,6 +78,13 @@
       });
     },
 
+    /* extendo
+     *
+     * This function implements inheritance for the chess pieces. It takes
+     * the name of the child, the name of the parent, and an object
+     * containing methods to add to the new prototype. Construct a new
+     * object and put it in the Chess.Pieces namespace.
+     */
     extendo: function (childName, parentName, childProto) {
       var ParentClass = Chess.Pieces[parentName],
           initialize = childProto.initialize || function () { },
