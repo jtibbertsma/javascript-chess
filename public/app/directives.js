@@ -23,6 +23,7 @@ angular.module('ChessDirectives', [])
 
           return {
             game: gameData.game,
+            squareSize: 64,
             selectedSquare: null,
             setProperty: function (prop) {
               this.resetProperty(prop);
@@ -64,13 +65,14 @@ angular.module('ChessDirectives', [])
     function boardPieceDirective(pieceUrls) {
       return {
         require: '^chessBoardView',
-        link: function ($scope, $element, $attrs) {
+        link: function ($scope, $element, $attrs, ctrl) {
           var pos = $scope.piece.pos;
 
           $attrs.$set('src', pieceUrls.get($scope.piece));
           $attrs.$addClass('piece');
 
-          $attrs.$set('style', 'top:' + 50 * pos[0] + 'px;left:' + 50 * pos[1] + 'px;');
+          $element.css('top', '' + ctrl.squareSize * pos[0] + 'px');
+          $element.css('left', '' + ctrl.squareSize * pos[1] + 'px');
         }
       }
     }
