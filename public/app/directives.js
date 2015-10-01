@@ -4,14 +4,6 @@ angular.module('ChessDirectives', [])
       return {
         templateUrl: '/templates/boardContent.html',
         controller: function boardController($scope) {
-          function arrToIdx(i, j) {
-            return i * 8 + j;
-          }
-
-          function idxToArr(idx) {
-            return [Math.floor(idx / 8), idx % 8];
-          }
-
           $scope.pieces = gameData.game.board.allPieces();
           $scope.player = "white";
           $scope.squares = [];
@@ -77,6 +69,14 @@ angular.module('ChessDirectives', [])
                 this.splicePiece(capture);
               }
             },
+          }
+
+          function arrToIdx(i, j) {
+            return i * 8 + j;
+          }
+
+          function idxToArr(idx) {
+            return [Math.floor(idx / 8), idx % 8];
           }
         },
 
