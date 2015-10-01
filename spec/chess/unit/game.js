@@ -113,16 +113,16 @@ describe("Chess.Game", function () {
     
     describe(".undoLastMove", function () {
       beforeEach(function () {
-        var capturedPiece = { color: "white" }
+        this.capturedPiece = { color: "white" }
         this.piece = this.game.board.pieces['44'];
 
         this.game.moves.push({
           from: [5,6],
           to:   [4,4],
-          capture: capturedPiece
+          capture: this.capturedPiece
         });
 
-        this.game.capturedPieces.white.push(capturedPiece);
+        this.game.capturedPieces.white.push(this.capturedPiece);
       });
 
       it("deletes the move from the moves array", function () {
@@ -154,6 +154,10 @@ describe("Chess.Game", function () {
 
         this.game.undoLastMove();
         expect(this.piece.unMove).toHaveBeenCalled();
+      });
+
+      it("returns the captured piece", function () {
+        expect(this.game.undoLastMove()).toEqual(this.capturedPiece);
       });
     });
   });

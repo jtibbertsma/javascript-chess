@@ -65,6 +65,8 @@
         this.board.placePiece(move.to, move.capture);
         this.capturedPieces[move.capture.color].pop();
       }
+
+      return move.capture;
     },
 
     /* inCheck
