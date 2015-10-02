@@ -44,15 +44,19 @@ angular.module('ChessDirectives', [])
             setSelectable: function () {
               var selectable = this.game.selectablePositions($scope.player);
               this.setProperty('selectable', selectable);
+              this.resetProperty('movable');
+            },
+
+            setMovable: function (origin) {
+              var movable = this.game.allValidMoves(idxToArr(origin));
+              this.setProperty('movable', movable);
             },
 
             selectSquare: function (idx) {
               this.setSelectable();
               $scope.squares[idx].selectable = false;
               this.selectedSquare = idxToArr(idx);
-
-              var movable = this.game.allValidMoves(idxToArr(idx));
-              this.setProperty('movable', movable);
+              this.setMovable(idx);
             },
 
             makeMove: function (idx) {
@@ -61,7 +65,6 @@ angular.module('ChessDirectives', [])
 
               this.game.move(this.selectedSquare, dest);
               this.selectedSquare = null;
-              this.resetProperty('movable');
               this.swapPlayer();
               this.setSelectable();
 
@@ -132,7 +135,6 @@ angular.module('ChessDirectives', [])
               ctrl.selectSquare(attrs.boardSquare);
             } else {
               ctrl.setSelectable();
-              ctrl.resetProperty('movable');
             }
           }
         }
