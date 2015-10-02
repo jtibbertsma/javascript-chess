@@ -16,6 +16,34 @@ angular.module('ChessServices', [])
     }
   ])
 
+  .factory('playerContext', ['consolePlayer',
+    function playerContextFactory(consolePlayer) {
+      return {
+        setContext: function (white, black) {
+          return new Players(white, black);
+        }
+      }
+
+      function Players(white, black) {
+        this.players = {};
+        this.setPlayer('white', white);
+        this.setPlayer('black', black);
+      }
+
+      Players.prototype = {
+        setPlayer: function (prop, type) {
+          switch (type) {
+            case 'console':
+              this.players[prop] = consolePlayer.create();
+              break;
+          }
+        }
+      };
+    }
+  ])
+
+  .factory('consolePlayer', )
+
   .factory('pieceUrls', 
     function pieceUrlsFactory() {
       return {

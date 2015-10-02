@@ -1,6 +1,6 @@
 angular.module('ChessDirectives', [])
-  .directive('chessBoardView', ['gameData',
-    function chessBoardViewDirective(gameData) {
+  .directive('chessBoardView', ['gameData', 'playerContext',
+    function chessBoardViewDirective(gameData, players) {
       return {
         templateUrl: '/templates/boardContent.html',
         controller: function boardController($scope) {
@@ -17,8 +17,9 @@ angular.module('ChessDirectives', [])
 
           return {
             game: gameData.game,
-            squareSize: 64,
             selectedSquare: null,
+            players: players.setContext('console', 'console'),
+
             splicePiece: function (capture) {
               var idx = $scope.pieces.indexOf(capture);
               $scope.pieces.splice(idx, 1);
@@ -65,8 +66,7 @@ angular.module('ChessDirectives', [])
 
               this.game.move(this.selectedSquare, dest);
               this.selectedSquare = null;
-              this.swapPlayer();
-              this.setSelectable();
+              this.players.nextTurn();
 
               if (capture) {
                 this.splicePiece(capture);
@@ -102,8 +102,8 @@ angular.module('ChessDirectives', [])
           attrs.$addClass('piece');
 
           scope.$watchCollection('piece.pos', function () {
-            element.css('top', '' + ctrl.squareSize * piece.pos[0] + 'px');
-            element.css('left', '' + ctrl.squareSize * piece.pos[1] + 'px');
+            element.css('top', '' + 64 * piece.pos[0] + 'px');
+            element.css('left', '' + 64 * piece.pos[1] + 'px');
           });
         }
       }
