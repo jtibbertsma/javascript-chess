@@ -18,31 +18,55 @@ angular.module('ChessServices', [])
 
   .factory('playerContext', ['consolePlayer',
     function playerContextFactory(consolePlayer) {
-      return {
-        setContext: function (white, black) {
-          return new Players(white, black);
-        }
-      }
 
       function Players(white, black) {
         this.players = {};
+        this.current = 'black';
         this.setPlayer('white', white);
         this.setPlayer('black', black);
       }
 
       Players.prototype = {
-        setPlayer: function (prop, type) {
+        setPlayer: function (color, type) {
           switch (type) {
             case 'console':
-              this.players[prop] = consolePlayer.create();
+              this.players[color] = consolePlayer.create(color);
               break;
           }
+        },
+
+        nextTurn: function (ctrl) {
+          this.swapPlayers();
+          this.players[this.current].playTurn(ctrl);
+        },
+
+        swapPlayers: function () {
+          this.current = Chess.Util.otherColor(this.current);
+        }
+      };
+
+      return {
+        setContext: function (white, black) {
+          return new Players(white, black);
         }
       };
     }
   ])
 
-  .factory('consolePlayer', )
+  .factory('consolePlayer',
+    function consolePlayerFactory() {
+      return {
+        create: function (color) {
+          return {
+            color: color,
+            playTurn: function (ctrl) {
+              ctrl.setSelectable(this.color);
+            }
+          };
+        }
+      };
+    }
+  )
 
   .factory('pieceUrls', 
     function pieceUrlsFactory() {

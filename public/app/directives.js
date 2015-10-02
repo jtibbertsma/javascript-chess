@@ -5,7 +5,6 @@ angular.module('ChessDirectives', [])
         templateUrl: '/templates/boardContent.html',
         controller: function boardController($scope) {
           $scope.pieces = gameData.game.board.allPieces();
-          $scope.player = "white";
           $scope.squares = [];
 
           for (var i = 0; i < 64; ++i) {
@@ -32,18 +31,14 @@ angular.module('ChessDirectives', [])
               });
             },
 
-            swapPlayer: function () {
-              $scope.player = Chess.Util.otherColor($scope.player);
-            },
-
             resetProperty: function (prop) {
               $scope.squares.forEach(function (square) {
                 square[prop] = false;
               });
             },
 
-            setSelectable: function () {
-              var selectable = this.game.selectablePositions($scope.player);
+            setSelectable: function (color) {
+              var selectable = this.game.selectablePositions(color);
               this.setProperty('selectable', selectable);
               this.resetProperty('movable');
             },
@@ -66,12 +61,16 @@ angular.module('ChessDirectives', [])
 
               this.game.move(this.selectedSquare, dest);
               this.selectedSquare = null;
-              this.players.nextTurn();
+              this.nextTurn();
 
               if (capture) {
                 this.splicePiece(capture);
               }
             },
+
+            nextTurn: function () {
+              this.players.nextTurn(this);
+            }
           }
 
           function arrToIdx(i, j) {
@@ -85,7 +84,7 @@ angular.module('ChessDirectives', [])
 
         link: function (scope, $element, attrs, ctrl) {
           attrs.$addClass("chess-board");
-          ctrl.setSelectable();
+          ctrl.nextTurn();
         }
       };
     }
