@@ -7,11 +7,13 @@ describe("Chess.Pieces.Pawn", function () {
       new Chess.Pieces.Pawn({ pos: [4,4], color: "black" }),
       new Chess.Pieces.Pawn({ pos: [2,6], color: "black" }),
       new Chess.Pieces.Pawn({ pos: [1,7], color: "black" }),
+      new Chess.Pieces.Pawn({ pos: [4,5], color: "black" }),
       new Chess.Pieces.Pawn({ pos: [7,7], color: "white" }),
       new Chess.Pieces.Pawn({ pos: [1,1], color: "white" }),
       new Chess.Pieces.Pawn({ pos: [2,1], color: "white" }),
       new Chess.Pieces.Pawn({ pos: [6,5], color: "white" }),
       new Chess.Pieces.Pawn({ pos: [3,6], color: "white" }),
+      new Chess.Pieces.Pawn({ pos: [3,0], color: "white" })
     ];
 
     this.board = new Chess.Board({ pieces: pieces });
@@ -83,6 +85,11 @@ describe("Chess.Pieces.Pawn", function () {
         var piece = this.board.pieceAt([2,6]);
         expect(piece.validMoves()).not.toContain([3,6]);
       });
+
+      it("can't move two spaces forward if there's a piece in the way", function () {
+        var piece = this.board.pieceAt([1,0]);
+        expect(piece.validMoves()).not.toContain([3,0]);
+      });
     });
 
     describe("white", function () {
@@ -135,6 +142,11 @@ describe("Chess.Pieces.Pawn", function () {
       it("can't move forward if a piece of the opposite color is in the way", function () {
         var piece = this.board.pieceAt([3,6]);
         expect(piece.validMoves()).not.toContain([2,6]);
+      });
+
+      it("can't move two spaces forward if there's a piece in the way", function () {
+        var piece = this.board.pieceAt([6,5]);
+        expect(piece.validMoves()).not.toContain([4,5]);
       });
     });
   });
