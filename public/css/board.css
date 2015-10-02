@@ -1,7 +1,6 @@
 .chess-board {
   position: absolute;
   display: inline-block;
-  border: 1px solid black;
   width: 512px;
 }
 

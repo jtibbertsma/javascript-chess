@@ -4,7 +4,8 @@
   <title>Chess</title>
 
   <link rel="icon shortcut" type="image/png" href="http://icons.iconarchive.com/icons/iconmuseo/chess/32/13-Pone-icon.png">
-  <link rel="stylesheet" type="text/css" href="css/app.css">
+  <link rel="stylesheet" type="text/css" href="css/board.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
   <script src="app/app.js"></script>
@@ -26,6 +27,10 @@
   <script src="chess/pieces/pawn.js"></script>
 </head>
 <body>
-  <div chess-board-view></div>
+  <main class="main-container">
+    <div class="board-container">
+      <div chess-board-view></div>
+    </div>
+  </main>
 </body>
 </html>

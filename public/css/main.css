@@ -1,0 +1,13 @@
+.main-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(rgb(197, 197, 197) 0%, rgb(238, 238, 238) 116px);
+}
+
+.board-container {
+  width: 50%;
+  margin: 65px auto;
+}
