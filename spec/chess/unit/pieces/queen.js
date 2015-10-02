@@ -20,7 +20,7 @@ describe("Chess.Pieces.Queen", function () {
       expect(Chess.Util.coordSort(this.queen.validMoves()))
         .toEqual(Chess.Util.coordSort([
           [2,1], [1,1], [0,1], [4,1], [3,0], [4,0], [2,0], [2,2],
-          [1,3], [0,4], [4,2], [5,3], [6,4], [7,5]
+          [1,3], [0,4], [4,2], [5,3], [6,4], [7,5], [3,2], [3,3], [3,4]
         ]));
     });
   });
