@@ -6,6 +6,10 @@
   }
 
   Chess.Util.extendo('Rook', 'SlidingPiece', {
-
+    moveDirs: function () {
+      return [
+        [-1,0], [0,1], [1,0], [0,-1]
+      ];
+    }
   });
 })();

@@ -80,10 +80,12 @@
 
     /* maybeAppend
      *
-     * Append a position to an array of positions if it's valid.
+     * Add a position to a list of valid moves if it's empty of has an enemy piece
+     * in it.
      */
     maybeAppend: function (moves, pos) {
-      if (this.validPos(pos))
+      var dest = this.board.pieceAt(pos);
+      if (!dest || dest.color === Chess.Util.otherColor(this.color))
         moves.push(pos);
     },
 

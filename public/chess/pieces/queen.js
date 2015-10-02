@@ -6,6 +6,10 @@
   }
 
   Chess.Util.extendo('Queen', 'SlidingPiece', {
-
+    moveDirs: function () {
+      return [
+        [-1,-1], [-1,0], [-1,1], [0,-1], [0,1], [1,-1], [1,0], [1,1]
+      ]
+    }
   });
 })();

@@ -23,6 +23,15 @@
       }
     },
 
+    /* maybeAppend
+     *
+     * Append a position to an array of positions if it's valid.
+     */
+    maybeAppend: function (moves, pos) {
+      if (this.validPos(pos))
+        moves.push(pos);
+    },
+
     validMoves: function () {
       var dir = this.color === "white" ? -1 : 1,
           row = this.pos[0],
