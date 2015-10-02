@@ -28,7 +28,7 @@
      * Append a position to an array of positions if it's valid.
      */
     maybeAppend: function (moves, pos) {
-      if (this.validPos(pos))
+      if (this.validPos(pos) && !this.board.pieceAt(pos))
         moves.push(pos);
     },
 

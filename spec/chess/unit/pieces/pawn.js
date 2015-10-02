@@ -13,7 +13,8 @@ describe("Chess.Pieces.Pawn", function () {
       new Chess.Pieces.Pawn({ pos: [2,1], color: "white" }),
       new Chess.Pieces.Pawn({ pos: [6,5], color: "white" }),
       new Chess.Pieces.Pawn({ pos: [3,6], color: "white" }),
-      new Chess.Pieces.Pawn({ pos: [3,0], color: "white" })
+      new Chess.Pieces.Pawn({ pos: [3,0], color: "white" }),
+      new Chess.Pieces.Pawn({ pos: [6,2], color: "white" })
     ];
 
     this.board = new Chess.Board({ pieces: pieces });
@@ -42,8 +43,8 @@ describe("Chess.Pieces.Pawn", function () {
       });
 
       it("can move two spaces forward if it hasn't moved yet", function () {
-        var piece = this.board.pieceAt([1,0]);
-        expect(piece.validMoves()).toContain([3,0]);
+        var piece = this.board.pieceAt([1,7]);
+        expect(piece.validMoves()).toContain([3,7]);
       });
 
       it("can only move one space forward if it has moved", function () {
@@ -100,8 +101,8 @@ describe("Chess.Pieces.Pawn", function () {
       });
 
       it("can move two spaces forward if it hasn't moved yet", function () {
-        var piece = this.board.pieceAt([6,5]);
-        expect(piece.validMoves()).toContain([4,5]);
+        var piece = this.board.pieceAt([6,2]);
+        expect(piece.validMoves()).toContain([4,2]);
       });
 
       it("can only move one space forward if it has moved", function () {
