@@ -38,8 +38,10 @@ angular.module('ChessDirectives', [])
             },
 
             setSelectable: function (color) {
-              var selectable = this.game.selectablePositions(color);
-              this.setProperty('selectable', selectable);
+              if (color) {
+                this.selectable = this.game.selectablePositions(color);
+              }
+              this.setProperty('selectable', this.selectable);
               this.resetProperty('movable');
             },
 
