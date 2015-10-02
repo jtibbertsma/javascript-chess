@@ -48,7 +48,7 @@
      * Get the piece in a given position, or null if there isn't anything there.
      */
     pieceAt: function (pos) {
-      return this.grid[pos[0]][pos[1]];
+      return this.grid[pos[0]] && this.grid[pos[0]][pos[1]];
     },
 
     /* placePiece

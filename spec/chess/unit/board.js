@@ -80,6 +80,7 @@ describe("Chess.Board", function () {
 
     it("returns undefined for an invalid position", function () {
       expect(this.board.pieceAt([0,-1])).toBeUndefined();
+      expect(this.board.pieceAt([-1,0])).toBeUndefined();
     });
   });
 
