@@ -1,12 +1,16 @@
 angular.module('ChessDirectives', [])
-  .directive('chessBoardView', ['playerContext', 'squareData', 'pieceData',
-    function chessBoardViewDirective(playerContext, squareData, pieceData) {
+  .directive('chessBoardView', [
+    'playerContext',
+    'squareData',
+    'pieceData',
+    '$document',
+    function chessBoardViewDirective(pc, sd, pd, $document) {
       return {
         templateUrl: '/templates/boardContent.html',
         controller: function boardController($scope) {
-          var squares = squareData.get(),
-              pieces = pieceData.get(),
-              players = playerContext.setContext('console', 'ai');
+          var squares = sd.get(),
+              pieces = pd.get(),
+              players = pc.setContext('console', 'ai');
 
           $scope.squares = squares.data();
           $scope.pieces = pieces.data();
@@ -31,13 +35,28 @@ angular.module('ChessDirectives', [])
 
             selectSquare: function (pos) {
               squares.selectSquare(pos);
+            },
+
+            undoLastMove: function () {
+              players.undoLastMove();
             }
           }
         },
 
-        link: function (scope, $element, attrs, ctrl) {
+        link: function (scope, _, attrs, ctrl) {
           attrs.$addClass("chess-board");
+          $document.on('keydown', undo);
+          scope.$on('$destroy', function () {
+            $document.off('keydown', undo);
+          });
           ctrl.nextTurn();
+
+          function undo(event) {
+            if (event.metaKey && event.keyCode === 90) {
+              event.preventDefault();
+              ctrl.undoLastMove();
+            }
+          }
         }
       };
     }
@@ -59,7 +78,7 @@ angular.module('ChessDirectives', [])
 
           scope.enter = enter;
           scope.leave = leave;
-          scope.click = click;
+          scope.mousedown = mousedown;
 
           scope.$watchCollection('piece.pos', function (pos) {
             element.css({
@@ -87,7 +106,7 @@ angular.module('ChessDirectives', [])
             }
           }
 
-          function click() {
+          function mousedown() {
             if (square.selectable) {
               ctrl.defaultClick();
               square.selectable = false;
@@ -103,8 +122,8 @@ angular.module('ChessDirectives', [])
     }
   ])
 
-  .directive('boardSquare',
-    function boardSquareDirective() {
+  .directive('boardSquare', ['isWhite',
+    function boardSquareDirective(isWhite) {
       return {
         require: '^chessBoardView',
         link: function (scope, element, attrs, ctrl) {
@@ -113,13 +132,6 @@ angular.module('ChessDirectives', [])
           attrs.$addClass("square");
           attrs.$addClass(isWhite(scope.$index) ? "white" : "black");
           scope.selectSquare = click;
-
-          function isWhite(idx) {
-            if (Math.floor(idx / 8) % 2 === 0) {
-              idx += 1;
-            }
-            return idx % 2 === 1;
-          }
 
           function click() {
             if (square.highlighted) {
@@ -131,4 +143,4 @@ angular.module('ChessDirectives', [])
         }
       }
     }
-  );
+  ]);

@@ -22,6 +22,17 @@ angular.module('ChessUtilityServices', [])
     }
   )
 
+  .factory('isWhite',
+    function isWhiteFactory() {
+      return function (idx) {
+        if (Math.floor(idx / 8) % 2 === 0) {
+          idx += 1;
+        }
+        return idx % 2 === 1;
+      };
+    }
+  )
+
   .factory('pieceUrls', 
     function pieceUrlsFactory() {
       return {
