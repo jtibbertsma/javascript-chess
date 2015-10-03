@@ -36,11 +36,10 @@ angular.module('ChessDirectives', [])
   .directive('boardPiece', ['pieceUrls',
     function boardPieceDirective(pieceUrls) {
       return {
-        require: '^chessBoardView',
-        link: function (scope, element, attrs, ctrl) {
+        link: function (scope, element, attrs) {
           var piece = scope.piece;
 
-          attrs.$set('src', pieceUrls.get(scope.piece));
+          scope.src = pieceUrls.get(piece);
           attrs.$addClass('piece');
 
           scope.$watchCollection('piece.pos', function () {
