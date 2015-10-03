@@ -34,3 +34,8 @@
   position: absolute;
   transition: top 200ms ease-in-out, left 200ms ease-in-out;
 }
+
+.piece.selectable,
+.highlighted:hover {
+  cursor: pointer;
+}
