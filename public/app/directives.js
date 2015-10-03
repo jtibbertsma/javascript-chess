@@ -17,7 +17,7 @@ angular.module('ChessDirectives', [])
           return {
             game: gameData.game,
             selectedSquare: null,
-            players: players.setContext('console', 'console'),
+            players: players.setContext('console', 'ai'),
 
             splicePiece: function (capture) {
               var idx = $scope.pieces.indexOf(capture);
@@ -27,7 +27,7 @@ angular.module('ChessDirectives', [])
             setProperty: function (prop, collection) {
               this.resetProperty(prop);
               collection.forEach(function (pos) {
-                $scope.squares[arrToIdx(pos[0], pos[1])][prop] = true;
+                $scope.squares[arrToIdx(pos)][prop] = true;
               });
             },
 
@@ -63,6 +63,8 @@ angular.module('ChessDirectives', [])
 
               this.game.move(this.selectedSquare, dest);
               this.selectedSquare = null;
+              this.resetProperty('selectable');
+              this.resetProperty('movable');
               this.nextTurn();
 
               if (capture) {
@@ -75,11 +77,17 @@ angular.module('ChessDirectives', [])
             }
           }
 
-          function arrToIdx(i, j) {
-            return i * 8 + j;
+          function arrToIdx(arr) {
+            if (typeof arr !== "object") {
+              return arr;
+            }
+            return arr[0] * 8 + arr[1];
           }
 
           function idxToArr(idx) {
+            if (typeof idx === "object") {
+              return idx;
+            }
             return [Math.floor(idx / 8), idx % 8];
           }
         },

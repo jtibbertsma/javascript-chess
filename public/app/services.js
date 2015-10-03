@@ -16,9 +16,8 @@ angular.module('ChessServices', [])
     }
   ])
 
-  .factory('playerContext', ['consolePlayer',
-    function playerContextFactory(consolePlayer) {
-
+  .factory('playerContext', ['consolePlayer', 'aiPlayer',
+    function playerContextFactory(consolePlayer, aiPlayer) {
       function Players(white, black) {
         this.players = {};
         this.current = 'black';
@@ -31,6 +30,9 @@ angular.module('ChessServices', [])
           switch (type) {
             case 'console':
               this.players[color] = consolePlayer.create(color);
+              break;
+            case 'ai':
+              this.players[color] = aiPlayer.create(color);
               break;
           }
         },
@@ -67,6 +69,36 @@ angular.module('ChessServices', [])
       };
     }
   )
+
+  .factory('aiPlayer', ['$timeout', 'gameData',
+    function aiPlayerFactory($timeout, gameData) {
+      var minTime = 500;
+
+      return {
+        create: function (color) {
+          return {
+            ai: new Chess.AI(color),
+
+            playTurn: function (ctrl) {
+              $timeout(this._playTurn.bind(this, ctrl), 0), true;
+            },
+
+            playTurn: function (ctrl) {
+              var a = new Date(),
+                  time,
+                  move = this.ai.bestMove(gameData.game);
+              time = Math.max(minTime - (new Date() - a), 0);
+
+              $timeout(function () {
+                ctrl.selectedSquare = move[0];
+                ctrl.makeMove(move[1]);
+              }, time);
+            }
+          };
+        }
+      };
+    }
+  ])
 
   .factory('pieceUrls', 
     function pieceUrlsFactory() {
