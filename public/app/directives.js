@@ -1,58 +1,27 @@
 angular.module('ChessDirectives', [])
-  .directive('chessBoardView', ['gameData', 'playerContext', 'squareData',
-    function chessBoardViewDirective(gameData, players, squareData) {
+  .directive('chessBoardView', ['playerContext', 'squareData', 'pieceData',
+    function chessBoardViewDirective(playerContext, squareData, pieceData) {
       return {
         templateUrl: '/templates/boardContent.html',
         controller: function boardController($scope) {
-          var squares = squareData.get();
+          var squares = squareData.get(),
+              pieces = pieceData.get(),
+              players = playerContext.setContext('console', 'ai');
 
           $scope.squares = squares.data();
-          $scope.pieces = gameData.game.board.allPieces();
+          $scope.pieces = pieces.data();
 
           return {
-            game: gameData.game,
-            players: players.setContext('console', 'ai'),
-            selectedSquare: null,
-
-            splicePiece: function (capture) {
-              var idx = $scope.pieces.indexOf(capture);
-              $scope.pieces.splice(idx, 1);
-            },
-
             makeMove: function (idx) {
-              var dest = idxToArr(idx),
-                  capture = this.game.board.pieceAt(dest);
-
-              // this.game.move(this.selectedSquare, dest);
-              // this.selectedSquare = null;
-              // this.resetProperty('selectable');
-              // this.resetProperty('movable');
-              // this.nextTurn();
-
-
-
-              if (capture) {
-                this.splicePiece(capture);
-              }
+              squares.makeMove(idx);
+              squares.disableInput();
+              this.nextTurn();
+              pieces.handleMove();
             },
 
             nextTurn: function () {
-              this.players.nextTurn(this);
+              players.nextTurn(this);
             }
-          }
-
-          function arrToIdx(arr) {
-            if (typeof arr !== "object") {
-              return arr;
-            }
-            return arr[0] * 8 + arr[1];
-          }
-
-          function idxToArr(idx) {
-            if (typeof idx === "object") {
-              return idx;
-            }
-            return [Math.floor(idx / 8), idx % 8];
           }
         },
 

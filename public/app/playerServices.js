@@ -38,23 +38,24 @@ angular.module('ChessPlayerServices', [])
     }
   ])
 
-  .factory('consolePlayer',
-    function consolePlayerFactory() {
+  .factory('consolePlayer', ['squareData',
+    function consolePlayerFactory(squareData) {
+      var squares = squareData.get();
       return {
         create: function (color) {
           return {
             color: color,
-            playTurn: function (ctrl) {
-              ctrl.setSelectable(this.color);
+            playTurn: function () {
+              squares.enableInput(this.color);
             }
           };
         }
       };
     }
-  )
+  ])
 
-  .factory('aiPlayer', ['$timeout', 'gameData',
-    function aiPlayerFactory($timeout, gameData) {
+  .factory('aiPlayer', ['$timeout', 'gameData', 'squareData',
+    function aiPlayerFactory($timeout, gameData, squareData) {
       var minTime = 500;
 
       return {
@@ -66,14 +67,14 @@ angular.module('ChessPlayerServices', [])
               $timeout(this._playTurn.bind(this, ctrl), 0, true);
             },
 
-            playTurn: function (ctrl) {
+            _playTurn: function (ctrl) {
               var a = new Date(),
                   time,
                   move = this.ai.bestMove(gameData.game);
               time = Math.max(minTime - (new Date() - a), 0);
 
               $timeout(function () {
-                ctrl.selectedSquare = move[0];
+                squareData.get().selectSquare(move[0]);
                 ctrl.makeMove(move[1]);
               }, time);
             }

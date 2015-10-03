@@ -37,6 +37,9 @@ angular.module('ChessDataServices', [])
           }
 
           currentData = {
+            _enabled: true,
+            selectedSquare: null,
+
             data: function () {
               return squares;
             },
@@ -54,27 +57,81 @@ angular.module('ChessDataServices', [])
               });
             },
 
-            setSelectable: function (color) {
+            enableInput: function (color) {
+              this._enabled = true;
               if (color) {
-                this.selectable = this.game.selectablePositions(color);
+                this.selectable = game.selectablePositions(color);
               }
               this.setProperty('selectable', this.selectable);
               this.resetProperty('movable');
             },
 
+            disableInput: function () {
+              this._enabled = false;
+              this.selectedSquare = null;
+              this.resetProperty('movable');
+              this.resetProperty('selectable');
+            },
+
+            clickable: function () {
+              return this._enabled;
+            },
+
             setMovable: function (origin) {
-              var movable = this.game.allValidMoves(idxToArr(origin));
+              var movable = game.allValidMoves(idxToArr(origin));
               this.setProperty('movable', movable);
             },
 
             selectSquare: function (idx) {
-              this.setSelectable();
-              squares[idx].selectable = false;
+              //this.setSelectable();
               this.selectedSquare = idxToArr(idx);
-              this.setMovable(idx);
+              if (this._enabled) {
+                squares[idx].selectable = false;
+                this.setMovable(idx);
+              }
+            },
+
+            makeMove: function (idx) {
+              var dest = idxToArr(idx);
+              game.move(this.selectedSquare, dest);
             }
           };
           return currentData;
+        }
+      }
+    }
+  ])
+
+  .factory('pieceData', ['gameData',
+    function pieceDataFactory(gameData) {
+      var currentData;
+
+      return {
+        get: function () {
+          if (currentData)
+            return currentData;
+          return this.create();
+        },
+
+        create: function () {
+          var game = gameData.game,
+              pieces = game.board.allPieces();
+
+          currentData = {
+            data: function () {
+              return pieces;
+            },
+
+            handleMove: function () {
+              var move = game.lastMove();
+              if (move && move.capture) {
+                var idx = pieces.indexOf(move.capture);
+                pieces.splice(idx, 1);
+              }
+            }
+          };
+          return currentData;
+        }
       };
     }
   ])
