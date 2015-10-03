@@ -11,7 +11,6 @@ angular.module('ChessDirectives', [])
 
           return {
             game: gameData.game,
-            squares: squares,
             players: players.setContext('console', 'ai'),
             selectedSquare: null,
 
@@ -20,48 +19,17 @@ angular.module('ChessDirectives', [])
               $scope.pieces.splice(idx, 1);
             },
 
-            setProperty: function (prop, collection) {
-              this.resetProperty(prop);
-              collection.forEach(function (pos) {
-                $scope.squares[arrToIdx(pos)][prop] = true;
-              });
-            },
-
-            resetProperty: function (prop) {
-              $scope.squares.forEach(function (square) {
-                square[prop] = false;
-              });
-            },
-
-            setSelectable: function (color) {
-              if (color) {
-                this.selectable = this.game.selectablePositions(color);
-              }
-              this.setProperty('selectable', this.selectable);
-              this.resetProperty('movable');
-            },
-
-            setMovable: function (origin) {
-              var movable = this.game.allValidMoves(idxToArr(origin));
-              this.setProperty('movable', movable);
-            },
-
-            selectSquare: function (idx) {
-              this.setSelectable();
-              $scope.squares[idx].selectable = false;
-              this.selectedSquare = idxToArr(idx);
-              this.setMovable(idx);
-            },
-
             makeMove: function (idx) {
               var dest = idxToArr(idx),
                   capture = this.game.board.pieceAt(dest);
 
-              this.game.move(this.selectedSquare, dest);
-              this.selectedSquare = null;
-              this.resetProperty('selectable');
-              this.resetProperty('movable');
-              this.nextTurn();
+              // this.game.move(this.selectedSquare, dest);
+              // this.selectedSquare = null;
+              // this.resetProperty('selectable');
+              // this.resetProperty('movable');
+              // this.nextTurn();
+
+
 
               if (capture) {
                 this.splicePiece(capture);
@@ -115,8 +83,9 @@ angular.module('ChessDirectives', [])
     }
   ])
 
-  .directive('boardSquare',
-    function boardSquareDirective() {
+  .directive('boardSquare', ['squareData',
+    function boardSquareDirective(squareData) {
+      var squares = squareData.get();
       return {
         require: '^chessBoardView',
         link: function (scope, element, attrs, ctrl) {
@@ -134,15 +103,18 @@ angular.module('ChessDirectives', [])
           }
 
           function onClick() {
+            if (!squares.clickable())
+              return;
+
             if (ctrl.selectedSquare !== null && square.movable) {
               ctrl.makeMove(attrs.boardSquare);
             } else if (square.selectable) {
-              ctrl.selectSquare(attrs.boardSquare);
+              squares.selectSquare(attrs.boardSquare);
             } else {
-              ctrl.setSelectable();
+              squares.enableInput();
             }
           }
         }
       }
     }
-  );
+  ]);
