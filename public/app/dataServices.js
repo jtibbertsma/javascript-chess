@@ -83,7 +83,7 @@ angular.module('ChessDataServices', [])
             },
 
             selectSquare: function (idx) {
-              //this.setSelectable();
+              idx = arrToIdx(idx);
               this.selectedSquare = idxToArr(idx);
               if (this._enabled) {
                 squares[idx].selectable = false;
