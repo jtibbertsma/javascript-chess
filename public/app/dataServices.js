@@ -33,7 +33,7 @@ angular.module('ChessDataServices', [])
           var squares = [],
               game = gameData.game;
           for (var i = 0; i < 64; ++i) {
-            squares.push({ movable: false, selectable: false });
+            squares.push({ highlighted: false, selectable: false });
           }
 
           currentData = {
@@ -63,13 +63,13 @@ angular.module('ChessDataServices', [])
                 this.selectable = game.selectablePositions(color);
               }
               this.setProperty('selectable', this.selectable);
-              this.resetProperty('movable');
+              this.resetProperty('highlighted');
             },
 
             disableInput: function () {
               this._enabled = false;
               this.selectedSquare = null;
-              this.resetProperty('movable');
+              this.resetProperty('highlighted');
               this.resetProperty('selectable');
             },
 
@@ -78,8 +78,8 @@ angular.module('ChessDataServices', [])
             },
 
             setMovable: function (origin) {
-              var movable = game.allValidMoves(idxToArr(origin));
-              this.setProperty('movable', movable);
+              var highlighted = game.allValidMoves(idxToArr(origin));
+              this.setProperty('highlighted', highlighted);
             },
 
             selectSquare: function (idx) {

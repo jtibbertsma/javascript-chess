@@ -33,21 +33,40 @@ angular.module('ChessDirectives', [])
     }
   ])
 
-  .directive('boardPiece', ['pieceUrls',
-    function boardPieceDirective(pieceUrls) {
+  .directive('boardPiece', ['pieceUrls', 'coordConversions',
+    function boardPieceDirective(pieceUrls, coordConversions) {
+      var arrToIdx = coordConversions.arrToIdx;
       return {
         link: function (scope, element, attrs) {
-          var piece = scope.piece;
+          var piece = scope.piece,
+              square, selectable;
+          getSquare();
 
           scope.src = pieceUrls.get(piece);
           attrs.$addClass('piece');
+
+          scope.enter = enter;
+          scope.leave = leave;
 
           scope.$watchCollection('piece.pos', function (pos) {
             element.css({
               top:  '' + 64 * pos[0] + 'px',
               left: '' + 64 * pos[1] + 'px'
             });
+            getSquare();
           });
+
+          function getSquare() {
+            square = scope.squares[arrToIdx(piece.pos)];
+          }
+
+          function enter() {
+            console.log("enter");
+          }
+
+          function leave() {
+            console.log("leave");
+          }
         }
       }
     }
@@ -76,10 +95,8 @@ angular.module('ChessDirectives', [])
             if (!squares.clickable())
               return;
 
-            if (ctrl.selectedSquare !== null && square.movable) {
+            if (ctrl.selectedSquare !== null && square.highlighted) {
               ctrl.makeMove(attrs.boardSquare);
-            } else if (square.selectable) {
-              squares.selectSquare(attrs.boardSquare);
             } else {
               squares.enableInput();
             }

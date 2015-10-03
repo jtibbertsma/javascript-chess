@@ -1,10 +1,12 @@
 <img ng-repeat="piece in pieces"
      ng-src="{{src}}"
+     ng-mouseenter="enter()"
+     ng-mouseleace="leave()"
      board-piece>
 </img>
 
 <div ng-repeat="square in squares"
-     ng-class="{selectable: square.selectable, movable: square.movable}"
+     ng-class="{highlighted: square.highlighted}"
      ng-click="selectSquare()"
      board-square="{{$index}}">
 </div>

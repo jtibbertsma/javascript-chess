@@ -1,6 +1,5 @@
 .chess-board {
   position: absolute;
-  display: inline-block;
   width: 512px;
 }
 
@@ -19,23 +18,19 @@
   background: #418EAF;
 }
 
-.square.selectable:hover,
-.square.movable:hover {
+.square.highlighted:hover, {
   cursor: pointer;
 }
 
-.square.white.movable,
-.square.white.selectable:hover {
+.square.white.highlighted {
   background: #BF9FCB;
 }
 
-.square.black.movable,
-.square.black.selectable:hover {
+.square.black.highlighted {
   background: #865699;
 }
 
 .piece {
   position: absolute;
-  pointer-events: none;
   transition: top 200ms ease-in-out, left 200ms ease-in-out;
 }
