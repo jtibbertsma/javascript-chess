@@ -110,7 +110,18 @@ describe("Chess.Game", function () {
       });
     });
 
-    
+    describe(".lastMove", function () {
+
+      it("should return the most recent move", function () {
+        this.game.move([0,0], [4,4]);
+        var move = this.game.lastMove();
+
+        expect(move.from).toEqual([0,0]);
+        expect(move.to).toEqual([4,4]);
+        expect(move.capture).toBeTruthy();
+      });
+    });
+
     describe(".undoLastMove", function () {
       beforeEach(function () {
         this.capturedPiece = { color: "white" }

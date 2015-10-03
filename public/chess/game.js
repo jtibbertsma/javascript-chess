@@ -47,6 +47,14 @@
       this._move(from, to);
     },
 
+    /* lastMove
+     *
+     * Get the most recent move.
+     */
+    lastMove: function () {
+      return this.moves[this.moves.length - 1];
+    },
+
     /* undoLastMove
      *
      * Undo the previous move. Replace a captured piece if necessary. Do nothing if
