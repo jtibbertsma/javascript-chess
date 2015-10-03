@@ -1,13 +1,13 @@
 (function () {
-  if (typeof Chess === 'undefined') {
-    Chess = {};
+  if (typeof AI === 'undefined') {
+    AI = {};
   }
 
-  var AI = Chess.AI = function (color) {
+  var ChessAI = AI.ChessAI = function (color) {
     this.color = color;
   };
 
-  AI.prototype = {
+  ChessAI.prototype = {
     bestMove: function (game) {
       var movables = game.selectablePositions(this.color),
           from = movables[Math.floor(Math.random() * movables.length)],

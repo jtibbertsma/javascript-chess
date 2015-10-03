@@ -61,7 +61,7 @@ angular.module('ChessPlayerServices', [])
       return {
         create: function (color) {
           return {
-            ai: new Chess.AI(color),
+            ai: new AI.ChessAI(color),
 
             playTurn: function (ctrl) {
               $timeout(this._playTurn.bind(this, ctrl), 0, true);
