@@ -42,9 +42,11 @@ angular.module('ChessDirectives', [])
           scope.src = pieceUrls.get(piece);
           attrs.$addClass('piece');
 
-          scope.$watchCollection('piece.pos', function () {
-            element.css('top', '' + 64 * piece.pos[0] + 'px');
-            element.css('left', '' + 64 * piece.pos[1] + 'px');
+          scope.$watchCollection('piece.pos', function (pos) {
+            element.css({
+              top:  '' + 64 * pos[0] + 'px',
+              left: '' + 64 * pos[1] + 'px'
+            });
           });
         }
       }
