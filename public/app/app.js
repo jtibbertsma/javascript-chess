@@ -1,4 +1,5 @@
 angular.module('JSChess', [
-  'ChessServices',
+  'ChessDataServices',
+  'ChessPlayerServices',
   'ChessDirectives'
 ]);
