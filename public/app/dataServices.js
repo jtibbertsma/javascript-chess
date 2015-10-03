@@ -17,7 +17,7 @@ angular.module('ChessDataServices', [])
   ])
 
   .factory('squareData', ['gameData', 'coordConversions',
-    function squareDataFactory(gameData) {
+    function squareDataFactory(gameData, coordConversions) {
       var currentData,
           idxToArr = coordConversions.idxToArr,
           arrToIdx = coordConversions.arrToIdx;
