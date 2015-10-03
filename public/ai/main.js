@@ -5,13 +5,16 @@
 
   var AI = Chess.AI = function (color) {
     this.color = color;
-    this.tmp = -1;
   };
 
   AI.prototype = {
     bestMove: function (game) {
-      var i = ++this.tmp;
-      return [[1,i], [3,i]];
+      var movables = game.selectablePositions(this.color),
+          from = movables[Math.floor(Math.random() * movables.length)],
+          possibleMoves = game.allValidMoves(from),
+          to = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+
+      return [from, to];
     }
   };
 })();

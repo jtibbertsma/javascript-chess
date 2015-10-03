@@ -56,7 +56,7 @@ angular.module('ChessPlayerServices', [])
 
   .factory('aiPlayer', ['$timeout', 'gameData', 'squareData',
     function aiPlayerFactory($timeout, gameData, squareData) {
-      var minTime = 500;
+      var minTime = 750;
 
       return {
         create: function (color) {
