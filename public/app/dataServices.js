@@ -16,6 +16,34 @@ angular.module('ChessDataServices', [])
     }
   ])
 
+  .factory('squareData',
+    function squareDataFactory() {
+      var currentData;
+
+      return {
+        get: function () {
+          if (currentData)
+            return currentData;
+          return this.create();
+        },
+
+        create: function () {
+          var squares = [];
+          for (var i = 0; i < 64; ++i) {
+            squares.push({ movable: false, selectable: false });
+          }
+
+          currentData = {
+            data: function () {
+              return squares;
+            }
+          };
+          return currentData;
+        }
+      };
+    }
+  )
+
   .factory('pieceUrls', 
     function pieceUrlsFactory() {
       return {

@@ -1,23 +1,19 @@
 angular.module('ChessDirectives', [])
-  .directive('chessBoardView', ['gameData', 'playerContext',
-    function chessBoardViewDirective(gameData, players) {
+  .directive('chessBoardView', ['gameData', 'playerContext', 'squareData',
+    function chessBoardViewDirective(gameData, players, squareData) {
       return {
         templateUrl: '/templates/boardContent.html',
         controller: function boardController($scope) {
-          $scope.pieces = gameData.game.board.allPieces();
-          $scope.squares = [];
+          var squares = squareData.get();
 
-          for (var i = 0; i < 64; ++i) {
-            $scope.squares.push({
-              movable: false,
-              selectable: false
-            });
-          }
+          $scope.squares = squares.data();
+          $scope.pieces = gameData.game.board.allPieces();
 
           return {
             game: gameData.game,
-            selectedSquare: null,
+            squares: squares,
             players: players.setContext('console', 'ai'),
+            selectedSquare: null,
 
             splicePiece: function (capture) {
               var idx = $scope.pieces.indexOf(capture);
