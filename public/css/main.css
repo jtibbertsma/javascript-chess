@@ -4,10 +4,22 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: linear-gradient(rgb(197, 197, 197) 0%, rgb(238, 238, 238) 116px);
+  background-image: linear-gradient(rgb(197, 197, 197) 0%, rgb(238, 238, 238) 275px);
 }
 
 .board-container {
-  width: 50%;
   margin: 65px auto;
+  width: 40%;
+}
+
+@media (max-width: 900px) {
+  .board-container {
+    width: 60%;
+  }
+}
+
+@media (max-width: 700px) {
+  .board-container {
+    width: 80%;
+  }
 }
