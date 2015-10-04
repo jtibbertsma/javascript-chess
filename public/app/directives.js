@@ -38,7 +38,10 @@ angular.module('ChessDirectives', [])
             },
 
             undoLastMove: function () {
-              players.undoLastMove();
+              var color = players.undoLastMove();
+              if (color) {
+                squares.enableInput(color);
+              }
             }
           }
         },
@@ -56,6 +59,7 @@ angular.module('ChessDirectives', [])
             if (event.metaKey && event.keyCode === 90) {
               event.preventDefault();
               ctrl.undoLastMove();
+              scope.$apply();
             }
           }
         }

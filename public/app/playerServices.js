@@ -43,8 +43,12 @@ angular.module('ChessPlayerServices', [])
             if (this.players[this.current].type === 'console') {
               this.rewind();
             }
-            this.rewind();
+            if (this.players[this.current].type !== 'console') {
+              this.rewind();
+            }
+            return this.current;
           }
+          return null;
         },
 
         rewind: function () {
