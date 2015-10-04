@@ -125,9 +125,17 @@ angular.module('ChessDataServices', [])
             handleMove: function () {
               var move = game.lastMove();
               if (move && move.capture) {
-                var idx = pieces.indexOf(move.capture);
-                pieces.splice(idx, 1);
+                this.remove(move.capture);
               }
+            },
+
+            add: function (piece) {
+              pieces.push(piece);
+            },
+
+            remove: function (piece) {
+              var idx = pieces.indexOf(piece);
+              pieces.splice(idx, 1);
             }
           };
           return currentData;

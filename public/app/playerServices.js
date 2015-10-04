@@ -1,6 +1,6 @@
 angular.module('ChessPlayerServices', [])
-  .factory('playerContext', ['consolePlayer', 'aiPlayer',
-    function playerContextFactory(consolePlayer, aiPlayer) {
+  .factory('playerContext', ['consolePlayer', 'aiPlayer', 'gameData', 'pieceData',
+    function playerContextFactory(consolePlayer, aiPlayer, gameData, pieceData) {
       function Players(white, black) {
         this.players = {};
         this.current = 'black';
@@ -9,6 +9,8 @@ angular.module('ChessPlayerServices', [])
       }
 
       Players.prototype = {
+        game: gameData.game,
+        pieces: pieceData.get(),
         setPlayer: function (color, type) {
           switch (type) {
             case 'console':
@@ -38,7 +40,19 @@ angular.module('ChessPlayerServices', [])
         undoLastMove: function () {
           if (this.hasConsolePlayer) {
             this.players[this.current].player.abortMove();
+            if (this.players[this.current].type === 'console') {
+              this.rewind();
+            }
+            this.rewind();
           }
+        },
+
+        rewind: function () {
+          var capture = this.game.undoLastMove();
+          if (capture) {
+            this.pieces.add(capture);
+          }
+          this.swapPlayers();
         }
       };
 
@@ -59,7 +73,8 @@ angular.module('ChessPlayerServices', [])
             color: color,
             playTurn: function () {
               squares.enableInput(this.color);
-            }
+            },
+            abortMove: function () { }
           };
         }
       };
