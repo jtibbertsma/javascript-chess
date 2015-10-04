@@ -90,7 +90,9 @@ angular.module('ChessDirectives', [])
           });
 
           function mouseenter() {
-            if (square.selectable) {
+            if (square.highlighted) {
+              scope.selectable = true;
+            } else if (square.selectable) {
               scope.selectable = true;
               square.highlighted = true;
             }
@@ -98,9 +100,9 @@ angular.module('ChessDirectives', [])
 
           function mouseleave() {
             if (square.selectable) {
-              scope.selectable = false;
               square.highlighted = false;
             }
+            scope.selectable = false;
           }
 
           function mousedown() {
@@ -116,7 +118,7 @@ angular.module('ChessDirectives', [])
             /* reset the board state */
             } else {
               ctrl.defaultClick();
-              enter();
+              mouseenter();
             }
           }
 
