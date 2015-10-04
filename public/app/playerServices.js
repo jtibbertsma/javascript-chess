@@ -52,6 +52,8 @@ angular.module('ChessPlayerServices', [])
         },
 
         rewind: function () {
+          if (this.game.moves.length === 0)
+            return;
           var capture = this.game.undoLastMove();
           if (capture) {
             this.pieces.add(capture);
