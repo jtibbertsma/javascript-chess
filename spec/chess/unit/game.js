@@ -170,6 +170,12 @@ describe("Chess.Game", function () {
       it("returns the captured piece", function () {
         expect(this.game.undoLastMove()).toEqual(this.capturedPiece);
       });
+
+      it("does nothing if there are not moves to undo", function () {
+        this.game.undoLastMove();
+        this.game.undoLastMove();
+        expect(true).toBeTruthy();
+      });
     });
   });
 
