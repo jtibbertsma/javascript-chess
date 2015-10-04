@@ -52,6 +52,7 @@ angular.module('ChessDirectives', [])
           ctrl.nextTurn();
 
           function undo(event) {
+            /* catch cmd-z */
             if (event.metaKey && event.keyCode === 90) {
               event.preventDefault();
               ctrl.undoLastMove();
@@ -62,22 +63,22 @@ angular.module('ChessDirectives', [])
     }
   ])
 
-  .directive('boardPiece', ['pieceUrls', 'coordConversions',
-    function boardPieceDirective(pieceUrls, coordConversions) {
+  .directive('chessPiece', ['pieceUrls', 'coordConversions',
+    function chessPieceDirective(pieceUrls, coordConversions) {
       var arrToIdx = coordConversions.arrToIdx;
       return {
         require: '^chessBoardView',
         link: function (scope, element, attrs, ctrl) {
           var piece = scope.piece,
-              square, selectable;
+              square;
           getSquare();
 
           scope.src = pieceUrls.get(piece);
           scope.selectable = false;
           attrs.$addClass('piece');
 
-          scope.enter = enter;
-          scope.leave = leave;
+          scope.mouseenter = mouseenter;
+          scope.mouseleave = mouseleave;
           scope.mousedown = mousedown;
 
           scope.$watchCollection('piece.pos', function (pos) {
@@ -88,18 +89,14 @@ angular.module('ChessDirectives', [])
             getSquare();
           });
 
-          function getSquare() {
-            square = scope.squares[arrToIdx(piece.pos)];
-          }
-
-          function enter() {
+          function mouseenter() {
             if (square.selectable) {
               scope.selectable = true;
               square.highlighted = true;
             }
           }
 
-          function leave() {
+          function mouseleave() {
             if (square.selectable) {
               scope.selectable = false;
               square.highlighted = false;
@@ -107,15 +104,24 @@ angular.module('ChessDirectives', [])
           }
 
           function mousedown() {
-            if (square.selectable) {
+            /* this piece is getting captured */
+            if (!square.selectable && square.highlighted) {
+              ctrl.makeMove(piece.pos);
+            /* this piece can move */
+            } else if (square.selectable) {
               ctrl.defaultClick();
               square.selectable = false;
               scope.selectable = false;
               ctrl.selectSquare(piece.pos);
+            /* reset the board state */
             } else {
               ctrl.defaultClick();
               enter();
             }
+          }
+
+          function getSquare() {
+            square = scope.squares[arrToIdx(piece.pos)];
           }
         }
       }

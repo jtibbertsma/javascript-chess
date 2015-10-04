@@ -1,14 +1,16 @@
-<img ng-repeat="piece in pieces"
-     ng-src="{{src}}"
-     ng-mouseenter="enter()"
-     ng-mouseleave="leave()"
-     ng-mousedown="mousedown()"
-     ng-class="{selectable: selectable}"
-     board-piece>
+<img
+  ng-repeat="piece in pieces"
+  ng-src="{{src}}"
+  ng-mouseenter="mouseenter()"
+  ng-mouseleave="maouseleave()"
+  ng-mousedown="mousedown()"
+  ng-class="{selectable: selectable}"
+  chess-piece>
 </img>
 
-<div ng-repeat="square in squares"
-     ng-class="{highlighted: square.highlighted}"
-     ng-click="selectSquare()"
-     board-square="{{$index}}">
+<div
+  ng-repeat="square in squares"
+  ng-class="{highlighted: square.highlighted}"
+  ng-click="selectSquare()"
+  board-square="{{$index}}">
 </div>

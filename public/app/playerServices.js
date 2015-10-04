@@ -12,21 +12,33 @@ angular.module('ChessPlayerServices', [])
         setPlayer: function (color, type) {
           switch (type) {
             case 'console':
-              this.players[color] = consolePlayer.create(color);
+              this.players[color] = {
+                player: consolePlayer.create(color),
+              }
+              this.hasConsolePlayer = true;
               break;
             case 'ai':
-              this.players[color] = aiPlayer.create(color);
+              this.players[color] = {
+                player: aiPlayer.create(color)
+              }
               break;
           }
+          this.players[color].type = type;
         },
 
         nextTurn: function (ctrl) {
           this.swapPlayers();
-          this.players[this.current].playTurn(ctrl);
+          this.players[this.current].player.playTurn(ctrl);
         },
 
         swapPlayers: function () {
           this.current = Chess.Util.otherColor(this.current);
+        },
+
+        undoLastMove: function () {
+          if (this.hasConsolePlayer) {
+            this.players[this.current].player.abortMove();
+          }
         }
       };
 
@@ -73,10 +85,18 @@ angular.module('ChessPlayerServices', [])
                   move = this.ai.bestMove(gameData.game);
               time = Math.max(minTime - (new Date() - a), 0);
 
-              $timeout(function () {
+              this.promise = $timeout(function () {
                 squareData.get().selectSquare(move[0]);
                 ctrl.makeMove(move[1]);
+                this.promise = null;
               }, time);
+            },
+
+            abortMove: function () {
+              if (this.promise) {
+                $timeout.cancel(this.promise);
+                this.promise = null;
+              }
             }
           };
         }
