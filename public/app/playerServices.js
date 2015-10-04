@@ -1,11 +1,16 @@
 angular.module('ChessPlayerServices', [])
-  .factory('playerContext', ['consolePlayer', 'aiPlayer', 'gameData', 'pieceData',
-    function playerContextFactory(consolePlayer, aiPlayer, gameData, pieceData) {
-      function Players(white, black) {
+  .factory('playerContext', [
+    'consolePlayer',
+    'aiPlayer',
+    'gameData',
+    'pieceData',
+    '$rootScope',
+    function contextFactory(consolePlayer, aiPlayer, gameData, pieceData, $rootScope) {
+      function Players(whiteType, blackType) {
         this.players = {};
         this.current = 'black';
-        this.setPlayer('white', white);
-        this.setPlayer('black', black);
+        this.setPlayer('white', whiteType);
+        this.setPlayer('black', blackType);
       }
 
       Players.prototype = {
@@ -31,6 +36,7 @@ angular.module('ChessPlayerServices', [])
         nextTurn: function (ctrl) {
           this.swapPlayers();
           this.players[this.current].player.playTurn(ctrl);
+          $rootScope.$emit('game:nextTurn');
         },
 
         swapPlayers: function () {

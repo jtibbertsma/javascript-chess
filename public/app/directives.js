@@ -67,14 +67,15 @@ angular.module('ChessDirectives', [])
     }
   ])
 
-  .directive('chessPiece', ['pieceUrls', 'coordConversions',
-    function chessPieceDirective(pieceUrls, coordConversions) {
+  .directive('chessPiece', ['pieceUrls', 'coordConversions', '$rootScope',
+    function chessPieceDirective(pieceUrls, coordConversions, $rootScope) {
       var arrToIdx = coordConversions.arrToIdx;
       return {
         require: '^chessBoardView',
         link: function (scope, element, attrs, ctrl) {
           var piece = scope.piece,
-              square;
+              square,
+              entered = false;
           getSquare();
 
           scope.src = pieceUrls.get(piece);
@@ -93,13 +94,18 @@ angular.module('ChessDirectives', [])
             getSquare();
           });
 
+          var deregisterFunc = $rootScope.$on('game:nextTurn', function () {
+            if (entered)
+              mouseenter();
+          });
+          scope.$on('$destroy', deregisterFunc);
+
           function mouseenter() {
-            if (square.highlighted) {
-              scope.selectable = true;
-            } else if (square.selectable) {
+            if (square.selectable || square.highlighted) {
               scope.selectable = true;
               square.highlighted = true;
             }
+            entered = true;
           }
 
           function mouseleave() {
@@ -107,6 +113,7 @@ angular.module('ChessDirectives', [])
               square.highlighted = false;
             }
             scope.selectable = false;
+            entered = false;
           }
 
           function mousedown() {
