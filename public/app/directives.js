@@ -10,7 +10,7 @@ angular.module('ChessDirectives', [])
         controller: function boardController($scope) {
           var squares = sd.get(),
               pieces = pd.get(),
-              players = pc.setContext('console', 'ai');
+              players = pc.setContext('ai', 'ai');
 
           $scope.squares = squares.data();
           $scope.pieces = pieces.data();
