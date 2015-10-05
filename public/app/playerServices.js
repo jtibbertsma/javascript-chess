@@ -36,7 +36,7 @@ angular.module('ChessPlayerServices', [])
         nextTurn: function (ctrl) {
           this.swapPlayers();
           this.players[this.current].player.playTurn(ctrl);
-          $rootScope.$emit('game:nextTurn');
+          $rootScope.$emit('game:nextTurn', this.current);
         },
 
         swapPlayers: function () {
@@ -52,6 +52,7 @@ angular.module('ChessPlayerServices', [])
             if (this.players[this.current].type !== 'console') {
               this.rewind();
             }
+            $rootScope.$emit('game:nextTurn', this.current);
             return this.current;
           }
           return null;

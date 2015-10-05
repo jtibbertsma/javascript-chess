@@ -74,4 +74,9 @@ p.game-type {
 .side-box > h4 {
   font-weight: 300;
   margin: 5px 0 5px 0;
+  text-transform: capitalize;
+}
+
+.side-box > h4.attention {
+  color: red;
 }

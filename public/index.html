@@ -14,6 +14,7 @@
   <script src="app/playerServices.js"></script>
   <script src="app/utilityServices.js"></script>
   <script src="app/directives.js"></script>
+  <script src="app/controllers.js"></script>
 
   <script src="ai/main.js"></script>
 
@@ -35,11 +36,13 @@
   <div class="main">
     <div class="board-left">
       <h1>Dope <span>Chess</span></h1>
-      <div class="side-box-container">
+      <div class="side-box-container" ng-controller="NotificationCtrl">
         <div class="side-box gray-border">
           <p class="game-type">Human vs AI</p>
-          <h4>Notification One</h4>
-          <h4>Notification Two</h4>
+          <h4
+            ng-repeat="notification in notifications"
+            ng-class="{attention: notification.important}"
+          >{{notification.message}}</h4>
         </div>
       </div>
     </div>
