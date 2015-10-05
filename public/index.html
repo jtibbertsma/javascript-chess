@@ -13,7 +13,8 @@
   <script src="app/dataServices.js"></script>
   <script src="app/playerServices.js"></script>
   <script src="app/utilityServices.js"></script>
-  <script src="app/directives.js"></script>
+  <script src="app/boardDirectives.js"></script>
+  <script src="app/uiDirectives.js"></script>
   <script src="app/controllers.js"></script>
 
   <script src="ai/main.js"></script>
@@ -36,13 +37,15 @@
   <div class="main">
     <div class="board-left">
       <h1>Dope <span>Chess</span></h1>
-      <div class="side-box-container" ng-controller="NotificationCtrl">
-        <div class="side-box gray-border">
+      <div class="notification-container" ng-controller="NotificationCtrl">
+        <div class="notification-box gray-border">
           <p class="game-type">Human vs AI</p>
           <h4
             ng-repeat="notification in notifications"
             ng-class="{attention: notification.important}"
           >{{notification.message}}</h4>
+        </div>
+        <div class="message-box gray-border" message-box-view>
         </div>
       </div>
     </div>

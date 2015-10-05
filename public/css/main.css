@@ -48,19 +48,19 @@ body {
   color: #666;
 }
 
-.side-box {
+.notification-box {
   margin-left: -30px;
   margin-top: 12px;
   height: 100%;
 }
 
 @media (max-width: 1075px) {
-  .side-box {
+  .notification-box {
     margin-left: 0;
   }
 }
 
-.side-box-container {
+.notifications-container {
   width: 200px;
   height: 115px;
 }
@@ -71,12 +71,12 @@ p.game-type {
   border-bottom: thin solid #aaa;
 }
 
-.side-box > h4 {
+.notification-box > h4 {
   font-weight: 300;
   margin: 5px 0 5px 0;
   text-transform: capitalize;
 }
 
-.side-box > h4.attention {
+.notification-box > h4.attention {
   color: red;
 }

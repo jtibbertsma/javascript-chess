@@ -1,4 +1,4 @@
-angular.module('ChessDirectives', [])
+angular.module('ChessBoardDirectives', [])
   .directive('chessBoardView', [
     'playerContext',
     'squareData',
