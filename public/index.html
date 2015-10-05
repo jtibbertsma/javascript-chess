@@ -45,12 +45,13 @@
             ng-class="{attention: notification.important}"
           >{{notification.message}}</h4>
         </div>
-        <div class="chat-box padded-box" chat-box-view>
-        </div>
+        <div class="chat-box padded-box" chat-box-view></div>
       </div>
     </div>
     <div class="game-container">
-      <div chess-board-view></div>
+      <div class="board-container">
+        <div chess-board-view></div>
+      </div>
     </div>
   </div>
 </body>

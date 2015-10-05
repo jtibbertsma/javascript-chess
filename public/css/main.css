@@ -15,6 +15,10 @@ body {
   margin-left: 215px;
 }
 
+.board-container {
+  float: left;
+}
+
 .board-left {
   float: left;
   width: 200px;
