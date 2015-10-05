@@ -1,6 +1,15 @@
 .chess-board {
-  position: absolute;
+  position: relative;
   width: 512px;
+}
+
+.chess-board:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
 }
 
 .square {
