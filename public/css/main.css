@@ -90,6 +90,12 @@ body {
   resize: none;
 }
 
+@media (max-width: 1075px) {
+  .chat-box > textarea {
+    width: 175px;
+  }
+}
+
 .chat-box > textarea:focus {
   outline: none;
 }
@@ -97,9 +103,14 @@ body {
 .message-list {
   height: 215px;
   margin-bottom: 7px;
-  overflow-y: scroll;
+  overflow-y: auto;
   border-top: thin solid #aaa;
   border-bottom: thin solid #aaa;
+}
+
+.message > span {
+  font-family: 'Hind', sans-serif;
+  font-weight: 300;
 }
 
 p.game-type {
