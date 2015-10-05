@@ -77,6 +77,31 @@ body {
   height: 293px;
 }
 
+.chat-box > textarea {
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 300;
+  font-family: 'Hind', sans-serif;
+  height: 63px;
+  width: 205px;
+  box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.25);
+  padding: 4px;
+  resize: none;
+}
+
+.chat-box > textarea:focus {
+  outline: none;
+}
+
+.message-list {
+  height: 215px;
+  margin-bottom: 7px;
+  overflow-y: scroll;
+  border-top: thin solid #aaa;
+  border-bottom: thin solid #aaa;
+}
+
 p.game-type {
   font-weight: 500;
   margin: 5px 0 15px 0;
