@@ -47,7 +47,7 @@ angular.module('ChessBoardDirectives', [])
         },
 
         link: function (scope, _, attrs, ctrl) {
-          attrs.$addClass("chess-board");
+          attrs.$addClass("chess-board clear");
           $document.on('keydown', undo);
           scope.$on('$destroy', function () {
             $document.off('keydown', undo);
