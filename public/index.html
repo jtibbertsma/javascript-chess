@@ -38,14 +38,14 @@
     <div class="board-left">
       <h1>Dope <span>Chess</span></h1>
       <div class="notification-container" ng-controller="NotificationCtrl">
-        <div class="notification-box gray-border">
+        <div class="notification-box padded-box">
           <p class="game-type">Human vs AI</p>
           <h4
             ng-repeat="notification in notifications"
             ng-class="{attention: notification.important}"
           >{{notification.message}}</h4>
         </div>
-        <div class="message-box gray-border" message-box-view>
+        <div class="chat-box padded-box" chat-box-view>
         </div>
       </div>
     </div>

@@ -39,30 +39,38 @@ body {
   cursor: pointer;
 }
 
-.gray-border {
+.padded-box {
   padding: 7px;
   border: thin #aaa solid;
 }
 
-.gray-border > * {
+.padded-box > * {
   color: #666;
 }
 
 .notification-box {
-  margin-left: -30px;
   margin-top: 12px;
-  height: 100%;
+  height: 107px;
+}
+
+.notification-box,
+.chat-box {
+  margin-left: -30px;
 }
 
 @media (max-width: 1075px) {
-  .notification-box {
+  .notification-box,
+  .chat-box {
     margin-left: 0;
   }
 }
 
 .notifications-container {
   width: 200px;
-  height: 115px;
+}
+
+.chat-box {
+  height: 293px;
 }
 
 p.game-type {
