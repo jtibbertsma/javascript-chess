@@ -37,6 +37,7 @@ body {
 .right-label {
   color: #888;
   font-size: 12px;
+  font-family: 'Philosopher', sans-serif;
   cursor: default;
   -webkit-user-select: none;
   -moz-user-select: none;
