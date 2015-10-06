@@ -1,6 +1,6 @@
 (function () {
-  if (typeof AI === 'undefined') {
-    AI = {};
+  if (!AI.metric) {
+    throw "Include metric.js before main.js"
   }
 
   var ChessAI = AI.ChessAI = function (color) {
@@ -15,6 +15,8 @@
           to = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
 
       return [from, to];
-    }
+    },
+
+    metric: AI.metric
   };
 })();
