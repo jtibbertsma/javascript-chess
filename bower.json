@@ -1,0 +1,14 @@
+{
+  "name": "javascript-chess",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jtibbertsma/javascript-chess",
+  "authors": [
+    "Joseph Tibbertsma <josephtibbertsma@gmail.com>"
+  ],
+  "description": "Dope Chess",
+  "license": "WTFPL",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.4"
+  }
+}

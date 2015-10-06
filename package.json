@@ -2,9 +2,11 @@
   "name": "javascript-chess",
   "version": "1.0.0",
   "description": "It's chess written in javascript!",
-  "main": "index.html",
   "scripts": {
+    "postinstall": "bower install",
+    "prestart": "npm install",
     "start": "node server.js",
+    "pretest": "npm install",
     "test": "node testServer.js"
   },
   "repository": {
@@ -26,7 +28,8 @@
   "dependencies": {
     "connect": "~3.4",
     "connect-logger": "*",
-    "serve-static": "~1.10"
+    "serve-static": "~1.10",
+    "bower": "~1.5"
   },
   "devDependencies": {
     "jasmine-core": "~2.3"
