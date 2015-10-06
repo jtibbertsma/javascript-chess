@@ -33,6 +33,10 @@
 .piece {
   position: absolute;
   transition: top 200ms ease-in-out, left 200ms ease-in-out;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 .piece.selectable,
