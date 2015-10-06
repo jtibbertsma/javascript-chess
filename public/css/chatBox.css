@@ -1,0 +1,44 @@
+.chat-box {
+  height: 311px;
+  margin-left: -30px;
+}
+
+.chat-box > textarea {
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 300;
+  font-family: 'Hind', sans-serif;
+  height: 63px;
+  width: 205px;
+  box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.25);
+  padding: 4px;
+  resize: none;
+}
+
+@media (max-width: 1075px) {
+  .chat-box {
+    margin-left: 0px;
+  }
+
+  .chat-box > textarea {
+    width: 175px;
+  }
+}
+
+.chat-box > textarea:focus {
+  outline: none;
+}
+
+.message-list {
+  height: 230px;
+  margin-bottom: 7px;
+  overflow-y: auto;
+  border-top: thin solid #aaa;
+  border-bottom: thin solid #aaa;
+}
+
+.message > span {
+  font-family: 'Hind', sans-serif;
+  font-weight: 300;
+}
