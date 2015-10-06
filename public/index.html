@@ -50,9 +50,23 @@
         <div class="chat-box padded-box" chat-box-view></div>
       </div>
     </div>
-    <div class="game-container clear">
-      <div class="board-container">
-        <div chess-board-view></div>
+    <div class="game-container" ng-controller="LabelCtrl">
+      <div class="above clear">
+        <div class="board-container">
+          <div chess-board-view></div>
+        </div>
+        <div class="right-side">
+          <div
+            class="right-label"
+            ng-repeat="number in rightSideNumbers"
+          >{{number}}</div>
+        </div>
+      </div>
+      <div class="below">
+        <div
+          class="under-label"
+          ng-repeat="letter in underBoardLetters"
+        >{{letter}}</div>
       </div>
     </div>
   </div>

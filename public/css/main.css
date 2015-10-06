@@ -19,6 +19,38 @@ body {
   float: left;
 }
 
+.above {
+  height: 512px;
+}
+
+.below {
+  height: 18px;
+}
+
+.right-side {
+  width: 15px;
+  height: 512px;
+  float: left;
+}
+
+.under-label {
+  color: #888;
+  float: left;
+  width: 35px;
+  padding-left: 29px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.right-label {
+  color: #888;
+  width: 11px;
+  padding-left: 4px;
+  font-size: 12px;
+  padding-top: 23px;
+  height: 41px;
+}
+
 .board-left {
   float: left;
   width: 200px;

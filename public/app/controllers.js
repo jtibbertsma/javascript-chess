@@ -32,4 +32,11 @@ angular.module('ChessControllers', [])
         }
       }
     }
+  ])
+
+  .controller('LabelCtrl', ['$scope',
+    function LabelCtrl($scope) {
+      $scope.underBoardLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+      $scope.rightSideNumbers = ['8', '7', '6', '5', '4', '3', '2', '1'];
+    }
   ]);
