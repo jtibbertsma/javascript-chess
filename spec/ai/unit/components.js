@@ -25,8 +25,8 @@ describe("AI utility type stuff", function () {
     it("Gives the largest possible value for checkmate", function () {
       var cgame = Mocks.checkmateGame;
 
-      expect(Math.abs(AI.metric(cgame))).toBeGreaterThan(100);
-      expect(Math.abs(AI.metric(cgame))).toBeGreaterThan(100);
+      expect(Math.abs(AI.metric(cgame))).toBeGreaterThan(1000);
+      expect(Math.abs(AI.metric(cgame))).toBeGreaterThan(1000);
     });
   });
 });

@@ -3,8 +3,6 @@
     return "" + pos[0] + pos[1];
   }
 
-  Mocks = {};
-
   var board = Mocks.generalBoard = {
     move: function (pos1, pos2) {
       board.pieces[stringify(pos2)] = board.pieces[stringify(pos1)];
