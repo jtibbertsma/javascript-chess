@@ -3,7 +3,9 @@ angular.module('ChessControllers', [])
     function NotificationCtrl($scope, $rootScope, gameData) {
       $scope.notifications = [{ message: '', important: false }];
       var fn1 = $rootScope.$on('game:nextTurn', notifyPlayer);
+      var fn2 = $rootScope.$on('game:gameOver', gameOver);
       $scope.$on('$destroy', fn1);
+      $scope.$on('$destroy', fn2);
       var game = gameData.game;
 
       function notifyPlayer(event, color) {
@@ -29,6 +31,22 @@ angular.module('ChessControllers', [])
           $scope.notifications.push(notif);
         } else {
           $scope.notifications[index] = notif;
+        }
+      }
+
+      function gameOver(event, type, color, playerLost) {
+        if (type === "checkmate") {
+          notifyCheckmate(color, playerLost);
+        } // handle stalemate
+      }
+
+      function notifyCheckmate(color, playerLost) {
+        $scope.notifications = [];
+        $scope.notifications.push({ message: color + ' is mated', important: false });
+        if (playerLost) {
+          $scope.notifications.push({ message: "You just got pwned!!", important: true });
+        } else {
+          $scope.notifications.push({ message: "Wow! You actually won!", important: false });
         }
       }
     }

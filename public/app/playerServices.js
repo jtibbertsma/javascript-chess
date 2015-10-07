@@ -34,9 +34,19 @@ angular.module('ChessPlayerServices', [])
         },
 
         nextTurn: function (ctrl) {
-          this.swapPlayers();
-          this.players[this.current].player.playTurn(ctrl);
-          $rootScope.$emit('game:nextTurn', this.current);
+          var color;
+          if (color = this.game.checkmate()) {
+            $rootScope.$emit(
+              'game:gameOver',
+              'checkmate',
+              color,
+              this.players[color].type === 'console'
+            );
+          } else {
+            this.swapPlayers();
+            this.players[this.current].player.playTurn(ctrl);
+            $rootScope.$emit('game:nextTurn', this.current);
+          }
         },
 
         swapPlayers: function () {
