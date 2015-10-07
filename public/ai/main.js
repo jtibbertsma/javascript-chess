@@ -9,14 +9,41 @@
 
   ChessAI.prototype = {
     bestMove: function (game) {
-      var movables = game.selectablePositions(this.color),
-          from = movables[Math.floor(Math.random() * movables.length)],
-          possibleMoves = game.allValidMoves(from),
-          to = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-
-      return [from, to];
+      return this.minimax(2, game, this.color).move;
     },
 
-    metric: AI.metric
+    metric: AI.metric,
+
+    /* minimax
+     *
+     * A recursive implementation of the minimax algorithm. If this method
+     * returns a moveObj with a null move, that means there are no moves, the
+     * game is over. This probably shouldn't be called in that case.
+     */
+    minimax: function (depth, game, color) {
+      var maxObj = { max: -10000, move: null };
+
+      if (depth === 0) {
+        maxObj.max = this.metric(game);
+      } else {
+        var selectable = game.selectablePositions(color);
+        for (var i = 0; i < selectable.length; i++) {
+          var from = selectable[i],
+              movable = game.allValidMoves(from);
+          for (var j = 0; j < movable.length; j++) {
+            var to = movable[j];
+            game.move(from, to);
+            var possibleMax = this.minimax(depth - 1, game, Chess.Util.otherColor(color));
+            game.undoLastMove();
+            if (-possibleMax.max > maxObj.max) {
+              maxObj.max = -possibleMax.max;
+              maxObj.move = [from, to];
+            }
+          }
+        }
+      }
+
+      return maxObj;
+    }
   };
 })();

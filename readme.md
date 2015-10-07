@@ -19,3 +19,12 @@ Unit tests are implemented with Jasmine. Use ```npm test``` to run the test serv
 ### Notes
 
 * Unit test for individual pieces rely on the actual board object instead of a mock. Implementing a mock board for each case would be more difficult than it's worth
+
+## AI Status
+
+The first version of the AI is implemented. It uses a naive minimax algorithm. It has two massive drawbacks:
+
+1. It's written synchronously.
+2. It's *_slow_*. It takes about 10 seconds to make a move. And since it's synchronous, the entire page blocks for the entire time. This is not ideal.
+
+So my goals for the near future are to rewrite the minimax algorithm asynchronously, and to figure out how to eliminate the redundencies in my chess calculations. I'd like to take this opportunity to learn how to profile javascript code. After that, I could research and implement other chess algorithms.
