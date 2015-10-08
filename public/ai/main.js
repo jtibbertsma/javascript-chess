@@ -10,6 +10,7 @@
   ChessAI.prototype = {
     bestMove: function (game) {
       return this.minimax(2, game, this.color).move;
+      // return this.randomMove(game);
     },
 
     metric: AI.metric,
@@ -44,6 +45,19 @@
       }
 
       return maxObj;
+    },
+
+    /* randomMove
+     *
+     * Randomly choose a valid move.
+     */
+    randomMove: function (game) {
+      var selectable = game.selectablePositions(this.color),
+          from = selectable[Math.floor(Math.random() * selectable.length)],
+          valid = game.allValidMoves(from),
+          to = valid[Math.floor(Math.random() * valid.length)];
+
+      return [from, to];
     }
   };
 })();

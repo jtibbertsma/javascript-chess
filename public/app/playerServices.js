@@ -56,12 +56,9 @@ angular.module('ChessPlayerServices', [])
         undoLastMove: function () {
           if (this.hasConsolePlayer) {
             this.players[this.current].player.abortMove();
-            if (this.players[this.current].type === 'console') {
+            do {
               this.rewind();
-            }
-            if (this.players[this.current].type !== 'console') {
-              this.rewind();
-            }
+            } while (this.players[this.current].type !== 'console')
             $rootScope.$emit('game:nextTurn', this.current);
             return this.current;
           }
@@ -69,12 +66,11 @@ angular.module('ChessPlayerServices', [])
         },
 
         rewind: function () {
-          if (this.game.moves.length === 0)
-            return;
           var capture = this.game.undoLastMove();
           if (capture) {
             this.pieces.add(capture);
           }
+          console.log(this.current);
           this.swapPlayers();
         }
       };
