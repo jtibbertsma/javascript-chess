@@ -106,31 +106,24 @@ angular.module('ChessPlayerServices', [])
 
       return {
         create: function (color) {
+          var game = gameData.game,
+              squares = squareData.get();
           return {
             ai: new AI.ChessAI(color),
 
             playTurn: function (ctrl) {
-              $timeout(this._playTurn.bind(this, ctrl), 300, true);
-            },
-
-            _playTurn: function (ctrl) {
-              var a = new Date(),
-                  time,
-                  move = this.ai.bestMove(gameData.game);
-              time = Math.max(minTime - (new Date() - a), 0);
-
-              this.promise = $timeout(function () {
-                squareData.get().selectSquare(move[0]);
-                ctrl.makeMove(move[1]);
-                this.promise = null;
-              }, time);
+              var a = new Date();
+              this.ai.bestMove(game, function (move) {
+                var time = Math.max(minTime - (new Date() - a), 0);
+                $timeout(function () {
+                  squares.selectSquare(move[0]);
+                  ctrl.makeMove(move[1]);
+                }, time, true);
+              });
             },
 
             abortMove: function () {
-              if (this.promise) {
-                $timeout.cancel(this.promise);
-                this.promise = null;
-              }
+              this.ai.abortMove();
             }
           };
         }
