@@ -26,5 +26,13 @@ describe("The main AI logic", function () {
         done();
       });
     }, 100000);
+
+    it("calculates a valid move", function (done) {
+      var game = this.game;
+      this.ai.bestMove(game, function (move) {
+        expect(game.validMove(move[0], move[1])).toBeTruthy();
+        done();
+      });
+    }, 100000);
   });
 });
