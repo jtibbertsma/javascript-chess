@@ -78,7 +78,7 @@ angular.module('ChessDataServices', [])
             },
 
             setMovable: function (origin) {
-              var highlighted = game.allValidMoves(idxToArr(origin));
+              var highlighted = game.validMoves(idxToArr(origin));
               this.setProperty('highlighted', highlighted);
             },
 

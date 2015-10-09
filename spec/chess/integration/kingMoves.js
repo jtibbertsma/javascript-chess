@@ -12,7 +12,7 @@ describe("King Moves", function () {
       })
     });
 
-    expect(Chess.Util.coordSort(game.allValidMoves([5,4])))
+    expect(Chess.Util.coordSort(game.validMoves([5,4])))
       .toEqual(Chess.Util.coordSort([[5,5], [6,3]]));
   });
 });

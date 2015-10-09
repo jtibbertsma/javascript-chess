@@ -45,7 +45,7 @@
         count = 0;
 
     for (var i = 0; i < positions.length; ++i) {
-      count += game.allValidMoves(positions[i]).length;
+      count += game.validMoves(positions[i]).length;
     }
     return count;
   }

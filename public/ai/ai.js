@@ -46,7 +46,7 @@
             return false;;
           }
           j = 0;
-          movable = game.allValidMoves(selectable[i]);
+          movable = game.validMoves(selectable[i]);
         }
         return true;
       }
@@ -77,7 +77,7 @@
     randomMove: function (game) {
       var selectable = game.selectablePositions(this.color),
           from = selectable[Math.floor(Math.random() * selectable.length)],
-          valid = game.allValidMoves(from),
+          valid = game.validMoves(from),
           to = valid[Math.floor(Math.random() * valid.length)];
 
       return [from, to];

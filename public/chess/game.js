@@ -110,13 +110,13 @@
              this.causesCheck(piece, to);
     },
 
-    /* allValidMoves
+    /* validMoves
      *
      * Get an array of all legal moves for a given position. If the player is in
      * check, a move is only legal if it gets the player out of check. A player
      * cannot move into check. En passant and castling are taken into account.
      */
-    allValidMoves: function (piecePos) {
+    validMoves: function (piecePos) {
       var piece = this.board.pieceAt(piecePos);
       if (!piece) {
         return [];
@@ -142,7 +142,7 @@
         }.bind(this))
 
         .filter(function (pos) {
-          return this.allValidMoves(pos).length > 0;
+          return this.validMoves(pos).length > 0;
         }.bind(this));
     },
 
