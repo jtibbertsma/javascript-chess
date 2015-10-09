@@ -10,12 +10,21 @@ describe("The main AI logic", function () {
       this.game = new Chess.Game({ board: new Chess.Board({ pieces: Chess.Util.defaultPieces() })});
     });
 
-    it("returns an array of two coordinates", function () {
-      var res = this.ai.bestMove(this.game);
+    // it("returns an array of two coordinates", function () {
+    //   var res = this.ai.bestMove(this.game);
 
-      expect(res.length).toEqual(2);
-      expect(validPos(res[0])).toBeTruthy();
-      expect(validPos(res[1])).toBeTruthy();
-    });
+    //   expect(res.length).toEqual(2);
+    //   expect(validPos(res[0])).toBeTruthy();
+    //   expect(validPos(res[1])).toBeTruthy();
+    // });
+
+    it("passes an array of two coordinates into the callback", function (done) {
+      this.ai.bestMove(this.game, function (move) {
+        expect(move.length).toEqual(2);
+        expect(validPos(move[0])).toBeTruthy();
+        expect(validPos(move[1])).toBeTruthy();
+        done();
+      });
+    }, 100000);
   });
 });
