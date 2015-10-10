@@ -134,6 +134,37 @@
       }
 
       return false;
+    },
+
+    /* fen
+     *
+     * Get the board portion of the game fen representation.
+     */
+    fen: function () {
+      var emptyCounter = 0,
+          rows = [];
+
+      for (var i = 0; i < 8; ++i) {
+        var row = '';
+        emptyCounter = 0;
+        for (var j = 0; j < 8; ++j) {
+          if (this.grid[i][j] === null) {
+            ++emptyCounter;
+          } else {
+            if (emptyCounter) {
+              row += emptyCounter;
+            }
+            emptyCounter = 0;
+            row += this.grid[i][j].symbol;
+          }
+        }
+        if (emptyCounter) {
+          row += emptyCounter;
+        }
+        rows.push(row);
+      }
+
+      return rows.join('/');
     }
   };
 })();

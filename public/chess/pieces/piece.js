@@ -8,11 +8,24 @@
   var Piece = Chess.Pieces.Piece = function (options) {
     this.pos = options.pos;
     this.color = options.color;
+    this.setSymbol();
 
     this._moves = 0;
   };
 
   Piece.prototype = {
+    /* setSymbol
+     *
+     * Used to set the symbol when initializing a piece
+     */
+    setSymbol: function () {
+      if (this.color === "white") {
+        this.symbol = this._symbol;
+      } else {
+        this.symbol = this._symbol.toLowerCase();
+      }
+    },
+
     /* virtual functions
      *
      * We want to be able to check if a piece is a king or pawn, so that

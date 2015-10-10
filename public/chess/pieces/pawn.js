@@ -49,6 +49,8 @@
       this.maybeAddCapture(moves, [row + dir, col + 1]);
 
       return moves;
-    }
+    },
+
+    _symbol: 'P'
   });
 })();

@@ -13,6 +13,14 @@
   };
 
   Game.prototype = {
+    /* fen (incomplete)
+     *
+     * Get the fen for the current game. Currently only the board portion is implemented.
+     */
+    fen: function () {
+      return this.board.fen();
+    },
+
     /* _move (private)
      *
      * Move a piece without validating.
